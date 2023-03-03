@@ -8,12 +8,18 @@ function Products() {
 
   const getUser = () => {
     return fetch("http://localhost:5000/api/getAllUser", {
-      headers: { Authentication: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDE1NDE5Y2Y2NzIyNmNiNTllMDI3YiIsImlhdCI6MTY3NzgwODc1NCwiZXhwIjoxNjc3ODk1MTU0fQ.6ZOSO1heIct8sQ7rscADp_FP6yXi9rnzDPZ46D2TzwI' },
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDE1NDE5Y2Y2NzIyNmNiNTllMDI3YiIsImlhdCI6MTY3NzgwODc1NCwiZXhwIjoxNjc3ODk1MTU0fQ.6ZOSO1heIct8sQ7rscADp_FP6yXi9rnzDPZ46D2TzwI",
+      },
     }).then((res) => res.json());
   };
   useEffect(() => {
     getUser().then((json) => console.log(json));
-  });
+  }, []);
   useEffect(() => {
     getAllProducts().then((res) => {
       setItems(res.products);
