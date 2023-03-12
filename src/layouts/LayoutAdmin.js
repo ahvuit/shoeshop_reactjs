@@ -12,7 +12,7 @@ import {
 //   import AppRoutes from "../components/Routes";
   //import GeneralRouting from "../components/Routes/GeneralRouting";
   
-  import MenuHeader from '../components/user/MenuHeader'
+  import MenuHeader from '../Components/user/MenuHeader'
   import { useDispatch, useSelector } from "react-redux";
   import { useLocation } from "react-router-dom";
   import {
@@ -20,7 +20,7 @@ import {
   
   } from "@ant-design/icons";
   import { useNavigate } from "react-router-dom";
-  import AppRoutes from '../components/Routes'
+  import AppRoutes from '../Components/Routes'
   import "../App.css";
 //   import { logout } from "../actions/auth";
 //   import { clearMessage } from "../actions/message";

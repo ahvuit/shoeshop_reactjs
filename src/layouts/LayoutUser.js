@@ -8,12 +8,12 @@ import {
 //   import AppRoutes from "../components/Routes";
   //import GeneralRouting from "../components/Routes/GeneralRouting";
   
-  import MenuHeader from '../components/user/MenuHeader'
+  import MenuHeader from '../Components/user/MenuHeader'
   import {
     ShoppingCartOutlined,
   
   } from "@ant-design/icons";
-  import AppRoutes from '../components/Routes'
+  import AppRoutes from '../Components/Routes'
   import "../App.css";
 import { getAllProducts } from "../actions/product";
 import { useDispatch, useSelector } from "react-redux";

@@ -1,11 +1,11 @@
 import React, {useEffect} from "react";
 import { Divider,message as msg } from "antd";
 import "./style.css";
-import SlideShowSale from '../components/user/SlideShowSale'
-import Product from '../components/user/Product'
+import SlideShowSale from '../Components/user/SlideShowSale'
+import Product from '../Components/user/Product'
 import { getAllProducts } from "../actions/product";
 import { useDispatch, useSelector } from "react-redux";
-import Brand from '../components/user/Brand'
+import Brand from '../Components/user/Brand'
 
 const Home = () => {
   const { products } = useSelector((state) => state.product);

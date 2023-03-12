@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { message as msg} from "antd";
 import "./style.css";
-import Product from "../components/user/Product";
+import Product from "../Components/user/Product";
 import { getAllProducts } from "../actions/product";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
