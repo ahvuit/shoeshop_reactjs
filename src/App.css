@@ -1,3 +1,6 @@
+
+
+
 .App {
   text-align: center;
   display: flex;
@@ -7,7 +10,18 @@
 
 }
 .appHeader{
+  
   height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.shoppingCartOutlined{
+  font-size: 25px;
+  margin-top: 20px;
+  margin-right: 16px;
+  cursor: pointer;
 }
 .pageContent {
   display: flex;
@@ -23,9 +37,49 @@
 .itemCard{
   margin: 8px;
 }
+.itemCardRibbon{
+  margin: 0 8px;
+  background: pink;
+}
+.itemCardRibbonHide{
+  display: none;
+}
+.itemCardBrand{
+  width: 200px;
+  height: 200px;
+  /* padding: 0; */
+  /* margin: 0 8px; */
+}
 .itemCardImage{
   height: 150px !important;
   object-fit:  scale-down;
+}
+
+.appBg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 83vh;
+    background: url(./assets/images/BgLogin.png);
+    background-size: cover;
+}
+.loginForm{
+  background-color: rgb(255, 255, 255,0.33);
+  box-shadow: 0px 8px 32px 0 rgba(0, 0, 255, 0.33);
+  backdrop-filter: blur(3px);
+  padding: 0px 16px 16px 16px;
+  border-radius: 16px;
+}
+.socialLogin{
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  color: white;
+  font-size: 24px;
+}
+.socialIcon{
+  cursor: pointer;
 }
 
 

@@ -1,7 +1,0 @@
-import AppRoutes from '../Routes';
-const PageContent = () => {
-  return <div className="pageContent">
-    <AppRoutes></AppRoutes>
-  </div>
-};
-export default PageContent
