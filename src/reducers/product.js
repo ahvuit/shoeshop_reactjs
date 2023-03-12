@@ -1,7 +1,8 @@
 import {
     GET_PRODUCT_SUCCESS,
     GET_PRODUCT_FAIL,
-    SELECTED_PRODUCT
+    SELECTED_PRODUCT,
+    REMOVE_SELECTED_PRODUCT
   } from "../actions/types";
   const initialState ={  products: null,product:null};
   // eslint-disable-next-line import/no-anonymous-default-export
@@ -24,6 +25,11 @@ import {
         return {
           ...state,
           product: payload.product,
+        };
+      case REMOVE_SELECTED_PRODUCT:
+        return {
+          ...state,
+          product: null,
         };
       
       

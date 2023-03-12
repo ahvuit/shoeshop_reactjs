@@ -17,7 +17,7 @@ function ProductOfType({ prop1 }) {
   useEffect(() => {
     dispatch(getAllProducts())
       .then(() => {
-        msg.success("Get all product successful");
+        //msg.success("Get all product successful");
         //msg.success(message);
       })
       .catch(() => {
