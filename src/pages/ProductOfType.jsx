@@ -31,7 +31,7 @@ function ProductOfType({ prop1 }) {
       products !== null
         ? products
             .filter((item) => item.brandId === categoryId.slice(6))
-            .slice(0, 5)
+            
         : "";
     
   } else if (categoryId && categoryId.includes("sale")) {

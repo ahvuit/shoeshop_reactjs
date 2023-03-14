@@ -66,7 +66,7 @@ import {
     );
   };
   export const login =(email, password)=>{
-    return (dispatch)=>{
+    return (dispatch, getState)=>{
       return  AuthService.login(email,password).then(
         (data)=> {
           console.log('data: ',data);
@@ -76,6 +76,7 @@ import {
                     type: LOGIN_SUCCESS,
                     payload: { user: data.data },
                   });
+                  
                    return Promise.resolve();
                   }else{
                     const message= data.message;

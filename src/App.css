@@ -1,6 +1,9 @@
 
-
-
+.hoverable-radio-button:hover {
+  background-color: #ff7f50;
+  border-color: #ff7f50;
+  color: white;
+}
 .App {
   text-align: center;
   display: flex;
@@ -8,6 +11,11 @@
   width: 100vw;
   height: 100vh;
 
+}
+.center-image-productDetails{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .appHeader{
   

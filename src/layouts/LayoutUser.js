@@ -1,56 +1,47 @@
-import {
-    Layout,
-    Drawer,
-    Badge,
-    FloatButton,
-  } from "antd";
-  import React, { useState,useEffect } from "react";
+import { Layout, Drawer, Badge, FloatButton, Table, InputNumber } from "antd";
+import React, { useEffect, useState } from "react";
 //   import AppRoutes from "../components/Routes";
-  //import GeneralRouting from "../components/Routes/GeneralRouting";
-  
-  import MenuHeader from '../Components/user/MenuHeader'
-  import {
-    ShoppingCartOutlined,
-  
-  } from "@ant-design/icons";
-  import AppRoutes from '../Components/Routes'
-  import "../App.css";
-import { getAllProducts } from "../actions/product";
-import { useDispatch, useSelector } from "react-redux";
-import { Card, List, Image, Typography, Rate, message as msg } from "antd";
+//import GeneralRouting from "../components/Routes/GeneralRouting";
 
+import MenuHeader from "../Components/user/MenuHeader";
+import { ShoppingCartOutlined } from "@ant-design/icons";
+import AppRoutes from "../Components/Routes";
+import "../App.css";
+import { useSelector } from "react-redux";
+import AppCart from '../Components/user/AppCart'
 //   import { logout } from "../actions/auth";
 //   import { clearMessage } from "../actions/message";
 //   import authHeader from "../services/auth-header";
-  const { Header, Content, Footer } = Layout;
+const { Header, Content, Footer } = Layout;
 
-const LayoutUser=()=>{
-  
-    return (<><Header
+const LayoutUser = () => {
+  return (
+    <>
+      <Header
         style={{
-            background: "#fff",
-            position: "sticky",
-            top: 0,
-            zIndex: 1,
-            height: 68.6,
-            width: "100%",
-            position: "fixed",
+          background: "#fff",
+          position: "sticky",
+          top: 0,
+          zIndex: 1,
+          height: 68.6,
+          width: "100%",
+          position: "fixed",
         }}
-    >
+      >
         <div
-            style={{
-                float: "left",
-                width: 120,
-                height: 31,
-                fontSize: 20,
-                // margin: "17px 24px 17px 0",
-                // background: "rgba(0, 0, 0, 0.1)",
-            }}
+          style={{
+            float: "left",
+            width: 120,
+            height: 31,
+            fontSize: 20,
+            // margin: "17px 24px 17px 0",
+            // background: "rgba(0, 0, 0, 0.1)",
+          }}
         >
-            VHIT Store
+          VHIT Store
         </div>
         <div style={{ display: "flex" }}>
-            {/* <Menu
+          {/* <Menu
       style={{
         float: "left",
         width: "80vw",
@@ -63,25 +54,25 @@ const LayoutUser=()=>{
         label: `nav ${index + 1}`,
       }))}
     /> */}
-            {/* //---------------------------------------------------- */}
-            <MenuHeader />
-            <AppCart
-                style={{
-                    float: "right",
-                    width: "10vw",
-                }} />
+          {/* //---------------------------------------------------- */}
+          <MenuHeader />
+          <AppCart
+            style={{
+              float: "right",
+              width: "10vw",
+            }}
+          />
         </div>
-    </Header>
-    <Content
+      </Header>
+      <Content
         className="site-layout"
-        
         style={{
-            paddingTop: 68.8,
-            paddingLeft:50,
-            paddingRight:50,
+          paddingTop: 68.8,
+          paddingLeft: 50,
+          paddingRight: 50,
         }}
-    >
-            {/* <Breadcrumb
+      >
+        {/* <Breadcrumb
       style={{
         margin: "16px 0",
       }}
@@ -91,47 +82,48 @@ const LayoutUser=()=>{
       <Breadcrumb.Item>App</Breadcrumb.Item>
     </Breadcrumb> */}
 
-            <AppRoutes />
-            {/* <GeneralRouting/> */}
-            {/* <div style={{   background: colorBgContainer }}></div> */}
-        </Content>
-        
+        <AppRoutes />
+        {/* <GeneralRouting/> */}
+        {/* <div style={{   background: colorBgContainer }}></div> */}
+      </Content>
+
       <FloatButton.BackTop />
       <Footer
         style={{
           textAlign: "center",
-          // position: "fixed",
-          // left: 0,
-          // bottom: 0,
-          // width: "100%",
-          // background:'red'
         }}
       >
         &#169; 2023 - Copyright Than Duy Hanh
-      </Footer></>)
-}
+      </Footer>
+    </>
+  );
+};
 
-function AppCart() {
-    const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
-    return (
-      <div>
-        <Badge
-          onClick={() => {
-            setCartDrawerOpen(true);
-          }}
-          count={7}
-          className="shoppingCartOutlined"
-        >
-          <ShoppingCartOutlined />
-        </Badge>
-        <Drawer
-          open={cartDrawerOpen}
-          onClose={() => {
-            setCartDrawerOpen(false);
-          }}
-          title="Your Cart"
-        ></Drawer>
-      </div>
-    );
-  }
-  export default LayoutUser;
+
+export default LayoutUser;
+// [
+//   {
+//     title: "Title",
+//     dataIndex: "title",
+//   },
+//   {
+//     title: "Title",
+//     dataIndex: "title",
+//   },
+//   {
+//     title: "Title",
+//     dataIndex: "title",
+//   },
+//   {
+//     title: "Title",
+//     dataIndex: "title",
+//   },
+//   {
+//     title: "Title",
+//     dataIndex: "title",
+//   },
+//   {
+//     title: "Title",
+//     dataIndex: "title",
+//   },
+// ]

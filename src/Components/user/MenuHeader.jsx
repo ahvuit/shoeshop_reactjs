@@ -54,23 +54,7 @@ const MenuHeader = () => {
   // const menuRef = useRef(null);
 
   const onMenuClick = (item) => {
-    // if(item.key.includes('sale')){
-    //   navigate(`//${item.key}`);
-    // }
-    // else
-    //  if(item.key==='profile'){
-    //   navigate(`/${item.key}`)
-    // }else
-    //   if (item.key === "logout") {
-    //   logOut();
-    // }
-    // else if (item.key === "") {
-    //   navigate(`/${item.key}`);
-    // } else if (currentUser) {
-    //   navigate(`/user/${item.key}`);
-    // } else {
-    //   navigate(`/login`);
-    // }
+    
     if (item.key === "logout") {
       logOut();
     } else {
@@ -80,22 +64,6 @@ const MenuHeader = () => {
     setCurrent(item.key);
   };
 
-  // useEffect(() => {
-  //   const menuElement = menuRef.current;
-
-  //   const handleClick = () => {
-  //     console.log('clicked:............');
-  //   };
-  //   if (menuElement) {
-  //     setTimeout(() => {
-  //       menuElement.addEventListener('click', handleClick);
-  //     }, 0);
-  //   }
-
-  //   return () => {
-  //     menuElement.removeEventListener("click", handleClick);
-  //   };
-  // }, []);
   return (
     <>
       <Menu

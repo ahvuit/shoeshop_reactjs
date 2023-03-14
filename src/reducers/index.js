@@ -4,6 +4,7 @@ import message from "./message";
 import brand from "./brand";
 import sale from "./sale";
 import product from "./product";
+import cart from "./cart";
 
 export default combineReducers({
   auth,
@@ -11,4 +12,5 @@ export default combineReducers({
   brand,
   sale,
   product,
+  cart,
 });
