@@ -4,6 +4,7 @@ import {
   DECREASE_QUANTITY,
   ADD_TO_CART,
   REMOVE_FROM_CART,
+  CLEAR_CART
 } from "../actions/types";
 const cartItemsFromStorage = localStorage.getItem("cartItems")
   ? JSON.parse(localStorage.getItem("cartItems"))
@@ -58,6 +59,11 @@ export default function (state = initialState, action) {
         decProduct.quantity -= 1;
         return { ...state };
       }
+    case CLEAR_CART:
+      
+     
+      return { ...state,numberCart:0, Carts: [] };
+      
     case GET_NUMBER_CART:
       return {
         ...state,

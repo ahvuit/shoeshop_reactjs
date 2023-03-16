@@ -3,7 +3,8 @@ import {
   DECREASE_QUANTITY,
   ADD_TO_CART,
   GET_NUMBER_CART,
-  REMOVE_FROM_CART
+  REMOVE_FROM_CART,
+  CLEAR_CART
 } from "./types";
 
 
@@ -32,6 +33,16 @@ export const removeFromCart = (productId, size) =>{
     const cartItems = getState().cart.Carts;
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
     localStorage.setItem("numberCart", JSON.stringify(numberCart));
+  }
+} 
+
+export const clearCart = () =>{
+  return (dispatch)=>{
+    dispatch({type: CLEAR_CART,
+      });
+      localStorage.removeItem('cartItems');
+      localStorage.removeItem('numberCart');
+
   }
 } 
 // export const removeFromCart = (productId, size) => ({

@@ -9,18 +9,7 @@ import { ShoppingCartOutlined } from "@ant-design/icons";
 import { addToCart } from "../../actions/cart";
 const { Title, Text } = Typography;
 const ProductDetail = () => {
-  // const shoe = {
-  //   name1: "Nike Air Zoom Pegasus 38",
-  //   image1: "https://via.placeholder.com/400x400.png?text=Shoe+Image",
-  //   price: 129.99,
-  //   rate: 4.5,
-  //   description:
-  //     "The Nike Air Zoom Pegasus 38 continues to put a spring in your step, using the same responsive foam as its predecessor. The mesh upper enhances ventilation and support where you need it. This product is made from at least 50% recycled content by weight.",
-  //   sizes: ["US 7", "US 8", "US 9", "US 10", "US 11", "US 12"],
-  //   colors: ["#000000", "#434343", "#636363", "#9C9C9C", "#C5C5C5", "#EFEFEF"],
-  //   quantity: 10,
-  // };
-  // const { sizes } = shoe;
+ 
 
   const { productId } = useParams();
   const { product } = useSelector((state) => state.product);
@@ -258,8 +247,8 @@ const selectedFields = { productId, name,image, quantity, price };
       size="large"
       disabled={!size}
       onClick={() => {
-        dispatch(addToCart(selectedFields, size));
-        console.log(`Buy button clicked for ${product.name} and size ${size}`);
+        dispatch(addToCart(selectedFields, parseInt(size)));
+        console.log(`Buy button clicked for ${product.name} and size ${parseInt(size)}`);
       }}
     >
       <ShoppingCartOutlined />
