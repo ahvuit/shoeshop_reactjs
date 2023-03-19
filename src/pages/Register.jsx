@@ -1,48 +1,29 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {  useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Button, Divider, Form, Input, Typography, message as msg } from "antd";
 import { FacebookFilled, GoogleOutlined } from "@ant-design/icons";
-import { login,register } from "../actions/auth";
 
-// const onFinish = (values) => {
-//   console.log("Success:", values);
-// };
-// const onFinishFailed = (errorInfo) => {
-//   console.log("Failed:", errorInfo);
-// };
+import { login, register } from "../actions/auth";
+
 const Register = () => {
   let navigate = useNavigate();
-  //const { isLoggedIn } = useSelector((state) => state.auth);
   const { message } = useSelector((state) => state.message);
   const dispatch = useDispatch();
 
   const onFinish = (values) => {
-    console.log(values);
-    //setTimeout()
     values.password.trim() !== values.rePassword.trim()
       ? msg.warning("confirmation password does not match")
-      : //console.log(values.username)
-        dispatch(register(values.username.trim(), values.password.trim()))
+      : dispatch(register(values.username.trim(), values.password.trim()))
           .then(() => {
-            console.log(values);
             msg.success("Register Successful");
             navigate("/login");
-            //window.location.reload();
           })
           .catch(() => {
             msg.error(message);
           });
   };
-  const onFinishFailed = (errorInfor) => {
-    //console.log(errorInfor.values);
-    //message.error("Login Failed");
-    //alert(message);
-  };
-
-  //   if (isLoggedIn) {
-  //     return <Navigate to="/profile" />;
-  //   }
+  const onFinishFailed = () => {};
 
   return (
     <div className="appBg">

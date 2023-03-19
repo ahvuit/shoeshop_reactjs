@@ -1,16 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate, Link } from "react-router-dom";
-import { Button, Divider, Form, Input, Typography, message as msg } from "antd";
 import { FacebookFilled, GoogleOutlined } from "@ant-design/icons";
+import { Button, Divider, Form, Input, Typography, message as msg } from "antd";
+
 import { login } from "../actions/auth";
 
-// const onFinish = (values) => {
-//   console.log("Success:", values);
-// };
-// const onFinishFailed = (errorInfo) => {
-//   console.log("Failed:", errorInfo);
-// };
 const Login = () => {
   let navigate = useNavigate();
   const { isLoggedIn } = useSelector((state) => state.auth);
@@ -18,20 +13,12 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const onFinish = (values) => {
-    console.log(values);
-    //setTimeout()
-
-    //console.log(values.username)
     dispatch(login(values.email.trim(), values.password.trim()))
       .then(() => {
-        console.log(values);
         msg.success("Login Success");
         navigate("/profile");
-        //window.location.reload();
       })
-      .catch(() => {
-        //msg.error(message);
-      });
+      .catch(() => {});
   };
   useEffect(() => {
     if (!isLoggedIn) {
@@ -40,11 +27,7 @@ const Login = () => {
       }
     }
   });
-  const onFinishFailed = (errorInfor) => {
-    //console.log(errorInfor.values);
-    //msg.error("Login Failed");
-    //alert(message);
-  };
+  const onFinishFailed = () => {};
 
   if (isLoggedIn) {
     return <Navigate to="/profile" />;

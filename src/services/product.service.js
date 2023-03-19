@@ -1,34 +1,30 @@
-import {API_URL} from '../utils/config'
-import authHeader from './auth-header'
+import { API_URL } from "../utils/config";
+import authHeader from "./auth-header";
 
 const getAllProducts = () => {
-    return fetch(API_URL + "getAllProducts", {
-      method: "GET",
-      mode: "cors",
-      headers: authHeader(),
-      
-      })
-      .then((res) => res.json())
-      .then((json) => {
-        console.log('goi api get all product');
-        return json;
-      });
-  };
+  return fetch(API_URL + "getAllProducts", {
+    method: "GET",
+    mode: "cors",
+    headers: authHeader(),
+  })
+    .then((res) => res.json())
+    .then((json) => {
+      return json;
+    });
+};
 const getProductDetails = (productId) => {
-    return fetch(API_URL + `getProductDetails/${productId}`, {
-      method: "GET",
-      mode: "cors",
-      headers: authHeader(),
-      
-      })
-      .then((res) => res.json())
-      .then((json) => {
-        console.log('goi api get product details');
-        return json;
-      });
-  };
-  // eslint-disable-next-line import/no-anonymous-default-export
-  export default {
-    getAllProducts,
-    getProductDetails
-  };
+  return fetch(API_URL + `getProductDetails/${productId}`, {
+    method: "GET",
+    mode: "cors",
+    headers: authHeader(),
+  })
+    .then((res) => res.json())
+    .then((json) => {
+      return json;
+    });
+};
+// eslint-disable-next-line import/no-anonymous-default-export
+export default {
+  getAllProducts,
+  getProductDetails,
+};

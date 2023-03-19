@@ -1,22 +1,18 @@
 import { Card, List, Image, Typography, Badge, Rate, Button } from "antd";
-import React, { useEffect, useState,createRef,useRef } from "react";
+import React, { useEffect, useState, createRef, useRef } from "react";
 import { Pagination } from "antd";
-import { HeartTwoTone } from "@ant-design/icons";
 import { useParams, useNavigate } from "react-router-dom";
-
-// import { getAllProducts } from "../../actions/product";
 
 function Products({ data }) {
   const navigate = useNavigate();
   // state để lưu trữ các thông tin cần thiết cho phân trang,
   // ví dụ như số trang hiện tại, số lượng bản ghi trên mỗi trang, và danh sách các bản ghi
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);  
+  const [pageSize] = useState(10);
   useEffect(() => {
     setCurrentPage(1);
   }, [data]);
   const { categoryId } = useParams();
-
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
@@ -25,10 +21,7 @@ function Products({ data }) {
   const currentItems = data
     ? data.slice(indexOfFirstItem, indexOfLastItem)
     : null;
-    const myRef = useRef({});
-   const handleCardClick = (productId) => {
-      console.log(`Clicked card with productId ${productId}`);
-    };
+  const myRef = useRef({});
   return (
     <div>
       <List
@@ -48,17 +41,25 @@ function Products({ data }) {
         renderItem={(products) => {
           myRef.current[products.productId] = createRef();
           return (
-            <Badge.Ribbon  className={products.sales ? "itemCardRibbon" : "itemCardRibbonHide"}  text={`${products.sales?.percent} %`}    >
-              {/* <Link to={`/product/${products.productId}`}> */}
+            <Badge.Ribbon
+              className={
+                products.sales ? "itemCardRibbon" : "itemCardRibbonHide"
+              }
+              text={`${products.sales?.percent} %`}
+            >
               <Card
-              ref={myRef.current[products.productId]}
+                ref={myRef.current[products.productId]}
                 className="itemCard"
                 title={products.name}
                 key={products.productId}
                 id={products.productId}
-                
                 cover={<Image className="itemCardImage" src={products.image} />}
-                actions={[ <><Rate disabled allowHalf defaultValue={products.rate} /><Button type="link" >Add to Cart</Button></>]}
+                actions={[
+                  <>
+                    <Rate disabled allowHalf defaultValue={products.rate} />
+                    <Button type="link">Add to Cart</Button>
+                  </>,
+                ]}
                 onClick={() => navigate(`/product/${products.productId}`)}
               >
                 <Card.Meta
@@ -86,7 +87,6 @@ function Products({ data }) {
                         </Typography.Text>
                       </Typography.Paragraph>
                     )
-                  
                   }
                   description={
                     <Typography.Paragraph
@@ -97,10 +97,7 @@ function Products({ data }) {
                     </Typography.Paragraph>
                   }
                 ></Card.Meta>
-               
-                
               </Card>
-              {/* </Link> */}
             </Badge.Ribbon>
           );
         }}

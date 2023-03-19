@@ -1,26 +1,16 @@
 import React from "react";
-//import { BrowserRouter } from "react-router-dom";
-//import logo from './logo.svg';
 import "./App.css";
-// import AppHeader from "./components/user/Header";
-// import PageContent  from "./components/user/PageContent";
-// import AppFooter  from "./components/user/Footer";
-import LayoutUser from "./layouts/Layout";
-// import AppRoutes from "./components/Routes";
-//import AppRoutes from "./components/Routes/userRoute";
-// import GeneralRouting from './components/Routes/GeneralRouting'
+import AppRoutes from "./Components/Routes";
+
+
 function App() {
   return (
+    
     <div>
-      <LayoutUser />
+      <AppRoutes/>
+     
     </div>
 
-    // <div className="App">
-    //  {/* <AppHeader /><PageContent /><AppFooter /> */}
-
-    //   {/* <div className="appFooter">&#169; 2023 - Copyright Than Duy </div> */}
-
-    // </div>
   );
 }
 

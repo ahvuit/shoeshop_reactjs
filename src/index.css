@@ -15,3 +15,6 @@ code {
   margin: 0;
   padding: 0;
 }
+:root {
+  --primary-color: #4281C8;
+}

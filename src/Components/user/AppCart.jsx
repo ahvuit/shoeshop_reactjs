@@ -1,30 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  Drawer,
-  Table,
-  Badge,
-  Button,
-  Form,
-  message as msg,
-} from "antd";
+import { Drawer, Table, Badge, Button, Form, message as msg } from "antd";
+import { useNavigate } from "react-router-dom";
+import { ShoppingCartOutlined } from "@ant-design/icons";
 
 import {
   removeFromCart,
   increaseQuantity,
   decreaseQuantity,
 } from "../../actions/cart";
-import { useNavigate } from "react-router-dom";
-
-import { ShoppingCartOutlined } from "@ant-design/icons";
 import AppCheckout from "./AppCheckout";
-const AppCart = () => {
 
+const AppCart = () => {
   const { Carts } = useSelector((state) => state.cart);
   const { numberCart } = useSelector((state) => state.cart);
   const [checkoutDrawerOpen, setCheckoutCartDrawerOpen] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.auth);
-
   const dispatch = useDispatch();
   const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
   const columns = [
@@ -58,7 +49,6 @@ const AppCart = () => {
         <div>
           <Button
             onClick={() => {
-              console.log("record: ", record);
               dispatch(decreaseQuantity(record.productId, record.size));
             }}
           >
@@ -112,8 +102,7 @@ const AppCart = () => {
     } else {
       msg.warning("You need to be logged in to checkout");
       setCartDrawerOpen(false);
-
-      navigate("/login"); // replace '/login' with your login page URL
+      navigate("/login");
     }
   };
   const { user } = useSelector((state) => state.auth);
@@ -133,7 +122,6 @@ const AppCart = () => {
     form.setFieldsValue(initialValues);
   }, [form, initialValues]);
 
-  // console.log('user: ',user.profile);
   return (
     <div>
       <Badge
@@ -143,7 +131,7 @@ const AppCart = () => {
         count={numberCart}
         className="shoppingCartOutlined"
       >
-        <ShoppingCartOutlined />
+        <ShoppingCartOutlined style={{ color: "var(--primary-color)" }} />
       </Badge>
       <Drawer
         title="Shopping Cart"
@@ -152,25 +140,28 @@ const AppCart = () => {
         onClose={() => {
           setCartDrawerOpen(false);
         }}
-        contentWrapperStyle={{ width: "100%", maxWidth: "800px" }}
+        contentWrapperStyle={{ width: "100%", maxWidth: "850px" }}
       >
         <Table
           dataSource={data}
           columns={columns}
           pagination={false}
+          locale={{
+            emptyText: "Your cart is empty",
+          }}
           rowKey={(record) => record.productId + record.size}
         />
         <div style={{ marginTop: 20, marginBottom: 20 }}>
           <h3>Total Price: ${parseFloat(totalCartPrice).toFixed(2)}</h3>
         </div>
-        <Button disabled={Object.keys(Carts).length===0 }  onClick={handleCheckout} type="primary">
+        <Button
+          style={{ background: "var(--primary-color)", color: "#fff" }}
+          disabled={Object.keys(Carts).length === 0}
+          onClick={handleCheckout}
+          type="primary"
+        >
           Checkout Your Cart
         </Button>
-        {/* <Button onClick={() => {
-            setCheckoutCartDrawerOpen(true);
-          }} type="primary">
-          Checkout Your Cart
-        </Button> */}
       </Drawer>
       <AppCheckout
         checkoutDrawerOpen={checkoutDrawerOpen}
@@ -179,7 +170,6 @@ const AppCart = () => {
         Carts={Carts}
         setCartDrawerOpen={setCartDrawerOpen}
       />
-      
     </div>
   );
 };

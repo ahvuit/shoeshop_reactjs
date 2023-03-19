@@ -7,8 +7,7 @@ const Profile = () => {
   
     if (!currentUser) {
       return <Navigate to="/login" />;
-    }
-  
+    }  
     return (
       <div >
        <h1>Login success and this is a page Profile</h1>

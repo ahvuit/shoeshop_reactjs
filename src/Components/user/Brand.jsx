@@ -1,18 +1,10 @@
 import { Card, List, Image } from "antd";
-
 import React from "react";
-// import { getAllProducts } from "../../actions/product";
-
 
 function Brand({ data }) {
-  console.log('data: ',data);
-  const handleCardClick = (brandName) => {
-    console.log("Brand Name: ", brandName);
-  };
-
+  const handleCardClick = (brandName) => {};
   return (
     <div>
-      
       <List
         style={{
           padding: 20,
@@ -29,28 +21,19 @@ function Brand({ data }) {
         }}
         renderItem={(brands, index) => {
           return (
-            <Card size="small"
-            
+            <Card
+              size="small"
               className="itemCardBrand"
-              
-            //   title={brands.brandName}
               key={index}
               cover={<Image className="itemCardImage" src={brands.logo} />}
               hoverable
               onClick={() => handleCardClick(brands)}
             >
-                
-                <p>{brands.brandName}</p>
+              <p>{brands.brandName}</p>
             </Card>
           );
         }}
-        
-        dataSource={
-          data !== null
-            ? 
-                data
-            : ""
-        }
+        dataSource={data !== null ? data : ""}
       ></List>
     </div>
   );

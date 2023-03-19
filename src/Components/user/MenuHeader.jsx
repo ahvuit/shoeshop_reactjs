@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { HomeFilled, LogoutOutlined, MenuOutlined } from "@ant-design/icons";
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { clearMessage } from "../../actions/message";
 import { getAllBrands } from "../../actions/brand";
 import { getAllSales } from "../../actions/sale";
@@ -14,31 +15,22 @@ const MenuHeader = () => {
   const { sale } = useSelector((state) => state.sale);
   const { message } = useSelector((state) => state.message);
   const dispatch = useDispatch();
-
   const [current, setCurrent] = useState("");
-
   const { user: currentUser } = useSelector((state) => state.auth);
   let location = useLocation();
-  // const homeRef = useRef(null); // tạo ref cho phần tử HomeFilled
   useEffect(() => {
     if (["/login", "/register"].includes(location.pathname)) {
-      dispatch(clearMessage()); // clear message when changing location
+      dispatch(clearMessage());
     }
   }, [dispatch, location]);
   useEffect(() => {
     dispatch(getAllBrands())
-      .then(() => {
-        //msg.success("Get Brand Successful");
-        //msg.success(message);
-      })
+      .then(() => {})
       .catch(() => {
         msg.error(message);
       });
     dispatch(getAllSales())
-      .then(() => {
-        // msg.success("Get Sale Successful");
-        //msg.success(message);
-      })
+      .then(() => {})
       .catch(() => {
         msg.error(message);
       });
@@ -47,27 +39,20 @@ const MenuHeader = () => {
   const logOut = useCallback(() => {
     dispatch(logout());
     navigate("/login");
-    //window.location.reload();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
   const navigate = useNavigate();
-  // const menuRef = useRef(null);
-
   const onMenuClick = (item) => {
-    
     if (item.key === "logout") {
       logOut();
     } else {
       navigate(`/${item.key}`);
     }
-
     setCurrent(item.key);
   };
-
   return (
     <>
       <Menu
-        // ref={menuRef}
         style={{
           float: "left",
           width: "80vw",
@@ -107,23 +92,19 @@ const MenuHeader = () => {
           <Menu.SubMenu
             key="u"
             style={{ marginLeft: "auto" }}
-            title={<MenuOutlined />}
+            title={<MenuOutlined style={{ color: "var(--primary-color)" }} />}
           >
             <Menu.Item key="logout">
               <LogoutOutlined /> Logout
             </Menu.Item>
             <Menu.Item key="profile">Profile</Menu.Item>
-            {currentUser.utype !== "USR" ? (
-              <Menu.Item key="admin">Admin</Menu.Item>
-            ) : (
-              <Menu.Item key="user">User</Menu.Item>
-            )}
+            <Menu.Item key={`order/${currentUser.userId}`}>My Order</Menu.Item>
           </Menu.SubMenu>
         ) : (
           <Menu.SubMenu
             key="u"
             style={{ marginLeft: "auto" }}
-            title={<MenuOutlined />}
+            title={<MenuOutlined style={{ color: "var(--primary-color)" }} />}
           >
             <Menu.Item key="login">Login</Menu.Item>
 
