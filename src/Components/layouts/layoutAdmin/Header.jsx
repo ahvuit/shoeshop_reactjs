@@ -1,26 +1,18 @@
-import {
-    
-    LogoutOutlined,
-    MenuOutlined,
-  } from "@ant-design/icons";
-  import { Breadcrumb, Layout, Menu, theme, FloatButton } from "antd";
-  import React, { useState, useCallback } from "react";
-  import { useNavigate } from "react-router-dom";
-  import { useDispatch, useSelector } from "react-redux";
-  import Slidenav from "./Sidenav";
-  import { logout } from "../../../actions/auth";
-  
-  const { Header, Content, Footer } = Layout;
+import { LogoutOutlined, MenuOutlined } from "@ant-design/icons";
+import {  Layout, Menu } from "antd";
+import React, { useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../actions/auth";
 
-  const HeaderAdmin =()=>{
-    const [current, setCurrent] = useState("");
-  const { user: currentUser } = useSelector((state) => state.auth);
+const { Header } = Layout;
+const HeaderAdmin = () => {
+  const [current, setCurrent] = useState("");
   const dispatch = useDispatch();
 
-  const [collapsed, setCollapsed] = useState(false);
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+  // const {
+  //   token: { colorBgContainer },
+  // } = theme.useToken();
   const logOut = useCallback(() => {
     dispatch(logout());
     navigate("/login");
@@ -36,42 +28,40 @@ import {
     }
     setCurrent(item.key);
   };
-    return(
+  return (
+    <Header
+      style={{
+        padding: 0,
+        background: "var(--primary-color)",
+        position: "sticky",
+        top: 0,
+        zIndex: 1,
+      }}
+    >
+      <Menu
+        style={{
+          float: "right",
+          background: "var(--primary-color)",
 
-    
-<Header
-          style={{
-            padding: 0,
-            background: "var(--primary-color)",
-            position: "sticky",
-            top: 0,
-            zIndex: 1,
-          }}
+          // width: "100vw",
+        }}
+        selectedKeys={[current]}
+        onClick={onMenuClick}
+        mode="horizontal"
+      >
+        <Menu.SubMenu
+          key="u"
+          style={{ marginLeft: "auto" }}
+          title={<MenuOutlined style={{ color: "#fff" }} />}
         >
-          <Menu
-            style={{
-              float: "right",
-            background: "var(--primary-color)",
-
-              // width: "100vw",
-            }}
-            selectedKeys={[current]}
-            onClick={onMenuClick}
-            mode="horizontal"
-          >
-            <Menu.SubMenu
-              key="u"
-              style={{ marginLeft: "auto" }}
-              title={<MenuOutlined style={{ color: "#fff" }} />}
-            >
-              <Menu.Item key="logout">
-                <LogoutOutlined /> Logout
-              </Menu.Item>
-              <Menu.Item key="admin/profile">Profile</Menu.Item>
-              <Menu.Item key="">Go Home</Menu.Item>
-        
-            </Menu.SubMenu>
-          </Menu>
-        </Header>)
-  }
-export default HeaderAdmin
+          <Menu.Item key="logout">
+            <LogoutOutlined /> Logout
+          </Menu.Item>
+          <Menu.Item key="admin/profile">Profile</Menu.Item>
+          <Menu.Item key="">Go Home</Menu.Item>
+        </Menu.SubMenu>
+      </Menu>
+    </Header>
+  );
+};
+export default HeaderAdmin;

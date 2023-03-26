@@ -39,6 +39,7 @@ const ProductModal = (props) => {
   }, [product]);
 
   useEffect(() => {
+    // console.log('imgg: ', image);
     if (Object.keys(product).length !== 0) {
       form.setFieldsValue(product);
       setFileList([
@@ -49,7 +50,9 @@ const ProductModal = (props) => {
           url: `${image}`,
         },
       ]);
-    } else {
+    }else if(image!==''){} else {
+      
+    //  console.log('imgg: ',image);
       form.resetFields();
       setFileList([]);
     }
@@ -69,6 +72,7 @@ const ProductModal = (props) => {
         onOk={() => setOpen(false)}
         onCancel={() => {
           setOpen(false);
+          setImage('')
         }}
         footer={null}
         width={1000}

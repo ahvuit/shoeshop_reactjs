@@ -12,7 +12,40 @@ const getAllBrand = () => {
       return json;
     });
 };
+const insertBrand = (brand) => {
+  console.log("bodyI: ", { ...brand });
+  return fetch(API_URL + "insertBrand", {
+    method: "POST",
+    mode: "cors",
+    headers: authHeader(),
+    body: JSON.stringify(brand),
+  })
+    .then((res) => res.json())
+    .then((json) => {
+      // localStorage.setItem("orderResult", JSON.stringify(json.data));
+      return json;
+    });
+};
+const updateBrand = (brandId, brand) => {
+  // console.log('body: ',JSON.stringify(body));
+  return fetch(API_URL + `updateBrand/${brandId}`, {
+    method: "PUT",
+    mode: "cors",
+    headers: authHeader(),
+    body: JSON.stringify(brand),
+  })
+    .then((res) => res.json())
+    .then((json) => {
+      // localStorage.setItem("orderResult", JSON.stringify(json.data));
+      return json;
+    })
+    .catch((e) => {
+      console.log("error: ", e);
+    });
+};
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getAllBrand,
+  insertBrand,
+  updateBrand,
 };

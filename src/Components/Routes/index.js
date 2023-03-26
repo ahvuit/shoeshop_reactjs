@@ -13,6 +13,7 @@ import LayoutUser from "../layouts/LayoutUser";
 import Products from "../admin/Products";
 import Orders from "../admin/Orders";
 import Categories from "../admin/Categories";
+import Brands from "../admin/Brands";
 
 import LayoutAdmin from "../layouts/layoutAdmin/LayoutAdmin"
 
@@ -39,6 +40,7 @@ function AppRoutes() {
       <Route path="products" element={<Products />} />
       <Route path="orders" element={<Orders />} />
       <Route path="categories" element={<Categories />} />
+      <Route path="brands" element={<Brands />} />
       </Route>
       <Route path="*" element={<Navigate to="/404" replace />} />
     </Routes>

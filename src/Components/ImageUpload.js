@@ -25,9 +25,10 @@ const ImageUpload = (props)=>{
   const handleChange = ({ fileList: File }) => {
     setFileList(File);
     // const File=newFileList;
-    const data1 = upload(File[0].originFileObj);
-
-    setImage(data1);
+    // const data1 = upload(File[0].originFileObj);
+    upload(File[0].originFileObj);
+    // console.log('url: ',data1);
+   // setImage(data1);
 
     // setImage( URL.createObjectURL(File[0].originFileObj))
   };
@@ -43,7 +44,8 @@ const ImageUpload = (props)=>{
         data = response.data["secure_url"];
       });
     setImage(data);
-    return data;
+    console.log('imgURL: ',data);
+    //return data;
   };
   const uploadButton = (
     <div>
