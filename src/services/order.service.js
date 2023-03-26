@@ -39,9 +39,21 @@ const cancelOrder = (orderId) => {
       return json;
     });
 };
+const getAllOrders = () => {
+  return fetch(API_URL + `getAllOrders`, {
+    method: "GET",
+    mode: "cors",
+    headers: authHeader(),
+  })
+    .then((res) => res.json())
+    .then((json) => {
+      return json;
+    });
+};
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   addOrder,
   getAllOrderByUserId,
   cancelOrder,
+  getAllOrders,
 };

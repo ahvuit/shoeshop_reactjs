@@ -98,7 +98,10 @@ const MenuHeader = () => {
               <LogoutOutlined /> Logout
             </Menu.Item>
             <Menu.Item key="profile">Profile</Menu.Item>
-            <Menu.Item key={`order/${currentUser.userId}`}>My Order</Menu.Item>
+            {(currentUser.utype==='USR')? <Menu.Item key={`order/${currentUser.userId}`}>My Order</Menu.Item>:
+               <Menu.Item key={`admin`}>Admin</Menu.Item>
+            }
+           
           </Menu.SubMenu>
         ) : (
           <Menu.SubMenu

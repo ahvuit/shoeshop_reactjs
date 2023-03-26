@@ -6,6 +6,8 @@ import {
   GET_ALL_ORDER_BY_USER_FAIL,
   CANCEL_ORDER_SUCCESS,
   CANCEL_ORDER_FAIL,
+  GET_ALL_ORDER_SUCCESS,
+  GET_ALL_ORDER_FAIL,
 } from "./types";
 
 import OrderService from "../services/order.service";
@@ -68,6 +70,23 @@ export const cancelOrder = (orderId) => (dispatch) => {
     } else {
       dispatch({
         type: CANCEL_ORDER_FAIL,
+      });
+      return Promise.reject();
+    }
+  });
+};
+export const getAllOrders = () => (dispatch) => {
+  return OrderService.getAllOrders().then((data) => {
+    if (data.data != null && Object.keys(data.data).length !== 0) {
+      dispatch({
+        type: GET_ALL_ORDER_SUCCESS,
+        payload: { orders: data.data },
+      });
+
+      return Promise.resolve();
+    } else {
+      dispatch({
+        type: GET_ALL_ORDER_FAIL,
       });
       return Promise.reject();
     }

@@ -5,8 +5,10 @@ import {
   GET_ALL_ORDER_BY_USER_FAIL,
   CANCEL_ORDER_SUCCESS,
   CANCEL_ORDER_FAIL,
+  GET_ALL_ORDER_FAIL,
+  GET_ALL_ORDER_SUCCESS
 } from "../actions/types";
-const initialState = { orders: [], error: null };
+const initialState = { orders: [],orders1:[], error: null };
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function (state = initialState, action) {
@@ -32,6 +34,21 @@ export default function (state = initialState, action) {
       };
 
     case GET_ALL_ORDER_BY_USER_FAIL:
+      return {
+        ...state,
+        error: payload.error,
+      };
+      
+      
+    case GET_ALL_ORDER_SUCCESS:
+      
+      return {
+        ...state,
+        orders1: payload.orders,
+        error: null,
+      };
+
+    case GET_ALL_ORDER_FAIL:
       return {
         ...state,
         error: payload.error,

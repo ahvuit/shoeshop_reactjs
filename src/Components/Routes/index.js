@@ -10,6 +10,12 @@ import ProductDetail from "../user/ProductDetail";
 import OrderByUser from "../../pages/OrderByUser";
 import LayoutUser from "../layouts/LayoutUser";
 
+import Products from "../admin/Products";
+import Orders from "../admin/Orders";
+import Categories from "../admin/Categories";
+
+import LayoutAdmin from "../layouts/layoutAdmin/LayoutAdmin"
+
 import React from "react";
 
 function AppRoutes() {
@@ -27,6 +33,12 @@ function AppRoutes() {
         <Route path="/sale/:categoryId" element={<ProductOfType />}></Route>
         <Route path="/product/:productId" element={<ProductDetail />}></Route>
         <Route path="/order/:userId" element={<OrderByUser />}></Route>
+      </Route>
+      <Route path="/admin/" element={<LayoutAdmin />}>
+      <Route path="profile" element={<Profile />} />
+      <Route path="products" element={<Products />} />
+      <Route path="orders" element={<Orders />} />
+      <Route path="categories" element={<Categories />} />
       </Route>
       <Route path="*" element={<Navigate to="/404" replace />} />
     </Routes>
