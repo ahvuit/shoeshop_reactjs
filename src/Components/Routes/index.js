@@ -14,6 +14,8 @@ import Products from "../admin/Products";
 import Orders from "../admin/Orders";
 import Categories from "../admin/Categories";
 import Brands from "../admin/Brands";
+import Customers from "../admin/Customers";
+import Employees from "../admin/Employees";
 
 import LayoutAdmin from "../layouts/layoutAdmin/LayoutAdmin"
 
@@ -41,6 +43,8 @@ function AppRoutes() {
       <Route path="orders" element={<Orders />} />
       <Route path="categories" element={<Categories />} />
       <Route path="brands" element={<Brands />} />
+      <Route path="customers" element={<Customers/>} />
+      <Route path="employees" element={<Employees />} />
       </Route>
       <Route path="*" element={<Navigate to="/404" replace />} />
     </Routes>

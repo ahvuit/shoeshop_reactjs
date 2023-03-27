@@ -48,9 +48,9 @@ const items = [
       getItem("Quản lý hãng giày", "brands", <DesktopOutlined />),
       getItem("Quản lý khuyễn mãi", "sales", <PieChartOutlined />),
       getItem("Quản lý phân quyền", "roles", <KeyOutlined />),
-      getItem("Quản lý tài khoản", "accounts", <UserOutlined />),
+      // getItem("Quản lý tài khoản", "accounts", <UserOutlined />),
       getItem("Quản lý khách hàng", "customers", <PieChartOutlined />),
-      getItem("Quản lý nhân viên", "staff", <TeamOutlined/>),
+      getItem("Quản lý nhân viên", "employees", <TeamOutlined/>),
     ],
     "group"
   ),
