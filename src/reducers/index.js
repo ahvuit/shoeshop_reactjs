@@ -9,6 +9,10 @@ import order from "./order";
 import category from "./category";
 import user from "./user";
 import profile from "./profile";
+import sizeTable from "./sizeTable";
+import status from "./status";
+import saleDetails from "./saleDetails";
+
  
 export default combineReducers({
   auth,
@@ -21,4 +25,7 @@ export default combineReducers({
   category,
   user, 
   profile,
+  sizeTable,
+  status,
+  saleDetails,
 });

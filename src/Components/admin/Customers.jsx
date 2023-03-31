@@ -34,7 +34,8 @@ const Customers = () => {
   const userss = users?.filter((user) => user.utype === "USR");
   const [openModal, setOpenModal] = useState(false);
   const dispatch = useDispatch();
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState([]); 
+  const [action1, setAction1]= useState('');
 
   // const [action, setAction] = useState("");
   useEffect(() => {
@@ -91,7 +92,7 @@ const Customers = () => {
             onClick={() => {
               setOpenModal(true);
               setUser(record);
-              // setAction("see");
+               setAction1("see");
             }}
           />
           <Button
@@ -146,7 +147,7 @@ const Customers = () => {
         setOpenModal={setOpenModal}
         user={user}
         //setBrands={setBrands}
-        //action={action}
+        action1={action1}
       />
     </>
   );

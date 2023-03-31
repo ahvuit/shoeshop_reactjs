@@ -2,7 +2,9 @@ import {
     GET_ALL_USER_SUCCESS,
     GET_ALL_USER_FAIL,
     UPDATE_USER_SUCCESS,
-    UPDATE_USER_FAIL
+    UPDATE_USER_FAIL,
+    INSERT_USER_SUCCESS,
+    INSERT_USER_FAIL
     
   } from "../actions/types";
   const initialState = { users: null, error: null };
@@ -22,18 +24,18 @@ import {
           ...state,
           users: null,
         };
-    //   case INSERT_BRAND_SUCCESS:
-    //     return {
-    //       ...state,
-    //       brand: [...state.brand, payload.brand],
-    //       error: null,
-    //       // categories: payload.categories,
-    //     };
-    //   case INSERT_BRAND_FAIL:
-    //     return {
-    //       ...state,
-    //       error: payload.error,
-    //     };
+      case INSERT_USER_SUCCESS:
+        return {
+          ...state,
+          users: [...state.users, payload.user],
+          error: null,
+          // categories: payload.categories,
+        };
+      case INSERT_USER_FAIL:
+        return {
+          ...state,
+          error: payload.error,
+        };
       case UPDATE_USER_SUCCESS:
         const { userId, ...rest } = payload.user;
         const newUser = state.users.map((us, index) => {

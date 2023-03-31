@@ -22,7 +22,6 @@ const register = (email, password) => {
       return json;
     });
 };
-
 function login(email, password) {
   return fetch(API_URL + "login", {
     method: "POST",

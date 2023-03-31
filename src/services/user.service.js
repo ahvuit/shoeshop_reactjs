@@ -11,6 +11,22 @@ const getAllUser = () => {
       return json;
     });
 };
+
+const insertUser = (user) => {
+  return fetch(API_URL + "register", {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(user),
+  })
+    .then((res) => res.json())
+    .then((json) => {
+      //localStorage.setItem("user", JSON.stringify(json.data));
+      return json;
+    });
+};
 const updateUser = (userId, user) => {
   // console.log('body: ',JSON.stringify(body));
   return fetch(API_URL + `updateUser/${userId}`, {
@@ -32,4 +48,5 @@ const updateUser = (userId, user) => {
 export default {
   getAllUser,
   updateUser,
+  insertUser,
 };

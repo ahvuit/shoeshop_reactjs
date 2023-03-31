@@ -16,7 +16,9 @@ import Categories from "../admin/Categories";
 import Brands from "../admin/Brands";
 import Customers from "../admin/Customers";
 import Employees from "../admin/Employees";
-
+import SizeTables from "../admin/SizeTables";
+import Sales from "../admin/Sales";
+import SaleDetails from "../admin/SaleDetails";
 import LayoutAdmin from "../layouts/layoutAdmin/LayoutAdmin"
 
 import React from "react";
@@ -45,6 +47,9 @@ function AppRoutes() {
       <Route path="brands" element={<Brands />} />
       <Route path="customers" element={<Customers/>} />
       <Route path="employees" element={<Employees />} />
+      <Route path="sizetable" element={<SizeTables />} />
+      <Route path="sales" element={<Sales />} />
+      <Route path="sale-products" element={<SaleDetails />} />
       </Route>
       <Route path="*" element={<Navigate to="/404" replace />} />
     </Routes>

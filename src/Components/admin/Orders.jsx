@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { InfoOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { getAllOrders } from "../../actions/order";
 import moment from "moment";
+import OrderDetailsModal from "./OrderDetailsModal";
 import OrderModal from "./OrderModal";
 const columns = [
   {
@@ -60,7 +61,9 @@ const columns = [
 const Orders = () => {
   const { orders1 } = useSelector((state) => state.order);
   const [openModal, setOpenModal] = useState(false);
+  const [openModal1, setOpenModal1] = useState(false);
   const [orderId, setOrderId] = useState("");
+  const [order, setOrder] = useState("");
 
   const data = orders1.map((item, index) => {
     return { ...item.orderModel, key: index };
@@ -90,26 +93,19 @@ const Orders = () => {
               setOrderId(record.orderId);
             }}
           />
-          <Button
+          {record.statusId==='6405f221abfbac7f699ebbbe'||record.statusId==='6405f227abfbac7f699ebbbf'?
+          '':<Button
             onClick={() => {
-              // setOpen(true);
-              // setProduct(record);
+              setOpenModal1(true);
+              setOrder(record);
               // setAction('edit')
               //   setOrderId(record.orderId);
             }}
             icon={<EditOutlined />}
             style={{ background: "#ffc107" }}
-          />
+          />}
 
-          <Button
-            type="primary"
-            danger
-            icon={<DeleteOutlined />}
-            //   onClick={() => {
-            //     setOpenModal(true);
-            //     setOrderId(record.orderId);
-            //   }}
-          />
+          
         </Space>
       ),
     },
@@ -134,10 +130,15 @@ const Orders = () => {
           rowKey="orderId"
         />
       </div>
-      <OrderModal
+      <OrderDetailsModal
         openModal={openModal}
         setOpenModal={setOpenModal}
         orderId={orderId}
+      />
+      <OrderModal
+        openModal={openModal1}
+        setOpenModal={setOpenModal1}
+        order={order}
       />
     </>
   );

@@ -8,20 +8,23 @@ import {
   InputNumber,
   Select,
   Rate,
+  message as msg 
 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 
 import ImageUpload from "../ImageUpload";
-import { getAllCategories } from "../../actions/category";
-
+import { getAllCategories } from "../../actions/category"; 
+import { getAllBrands } from "../../actions/brand";
+import {insertProduct, updateProduct } from "../../actions/product";
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
   required: "${label} is required",
 };
 const ProductModal = (props) => {
   const { open, setOpen, product, action } = props;
-  const { brand } = useSelector((state) => state.brand);
   const { categories } = useSelector((state) => state.category);
+  const { user } = useSelector((state) => state.auth);
+  const { brand } = useSelector((state) => state.brand);
   const [image, setImage] = useState("");
   const dispatch = useDispatch();
 
@@ -29,7 +32,11 @@ const ProductModal = (props) => {
     dispatch(getAllCategories())
       .then(() => {})
       .catch(() => {});
+      dispatch(getAllBrands())
+      .then(() => {})
+      .catch(() => {});
   }, [dispatch]);
+  console.log('brand: ',brand);
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -58,7 +65,28 @@ const ProductModal = (props) => {
     }
   }, [form, product, image]);
   const handleSubmit = (values) => {
-    console.log("value: ", { ...values, image: image });
+    if (action === "add") {
+    const b={ ...values,rate:0,productId:null, image: image,createdDate:null,dateUpdated:null,updateBy:null }
+      console.log('bbb: ',b);
+      // const iCategory = { ...values, categoryId: null };
+      dispatch(insertProduct(b))
+        .then(() => {
+          setOpen(false);
+          msg.success("Insert product successful");
+        })
+        .catch(() => {});
+    } else if (action === "edit") {
+    const b={ ...values,rate:product.rate, image: image,createdDate:null,dateUpdated:null,updateBy:null }
+      console.log('rate: ',b);
+     // const { categoryId, ...rest } = values;
+      dispatch(updateProduct(b.productId, b))
+        .then(() => {
+          setOpen(false);
+          msg.success("Update product successful");
+        })
+        .catch(() => {});
+    }
+    //console.log("value: ", JSON.stringify(b));
   };
 
   const [fileList, setFileList] = useState([]);

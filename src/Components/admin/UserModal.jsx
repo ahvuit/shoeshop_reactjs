@@ -19,7 +19,7 @@ const validateMessages = {
   required: "${label} is required",
 };
 const UserModal = (props) => {
-  const { openModal, setOpenModal, user } = props;
+  const { openModal, setOpenModal,action1, user } = props;
   console.log('u: ',user);
   const { profile } = useSelector((state) => state.profile);
 //   const { categories } = useSelector((state) => state.category);
@@ -42,8 +42,9 @@ const UserModal = (props) => {
 
   useEffect(() => {
     // console.log('imgg: ', image);
-    if (Object.keys(profile).length !== 0) {
-      form.setFieldsValue(profile);
+    if (Object.keys(profile).length !== 0 ) {
+      if(Object.keys(user).length!==0){
+        form.setFieldsValue(profile);
       setFileList([
         {
           uid: "-1",
@@ -52,7 +53,9 @@ const UserModal = (props) => {
           url: `${image}`,
         },
       ]);
-    }else if(image!==''){} else {
+      }
+      
+    }else {
       
     //  console.log('imgg: ',image);
       form.resetFields();
@@ -70,16 +73,19 @@ const UserModal = (props) => {
       <Modal
         title="Modal 1000px width"
         centered
+       
         open={openModal}
         onOk={() => setOpenModal(false)}
         onCancel={() => {
+          //profile=[]
           setOpenModal(false);
-          setImage('')
+          //setImage('')
         }}
         footer={null}
         // width={1000}
       >
         <Form
+        disabled
           //disabled={action === "see"}
           form={form}
           layout="vertical"
@@ -108,7 +114,7 @@ const UserModal = (props) => {
             <Input />
           </Form.Item>
             <Form.Item
-            disabled>
+            disabled={action1==='see'}>
           <ImageUpload
 
 setFileList={setFileList}
@@ -117,7 +123,7 @@ image={image}
 setImage={setImage}
 />
 </Form.Item>
-          {/* <Form.Item>
+        {action1!=="see"?(<Form.Item>
             <Button
               style={{ background: "var(--primary-color)" }}
               type="primary"
@@ -125,7 +131,8 @@ setImage={setImage}
             >
               Submit
             </Button>
-          </Form.Item> */}
+          </Form.Item> ):('')}
+          
         </Form>
       </Modal>
     </>
