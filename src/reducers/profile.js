@@ -1,6 +1,8 @@
 import {
     GET_PROFILE_SUCCESS,
-    GET_PROFILE_FAIL
+    GET_PROFILE_FAIL,
+    UPDATE_PROFILE_SUCCESS,
+    UPDATE_PROFILE_FAIL
   } from "../actions/types";
   const initialState = { profile: [], error: null };
   // eslint-disable-next-line import/no-anonymous-default-export
@@ -31,27 +33,30 @@ import {
     //       ...state,
     //       error: payload.error,
     //     };
-    //   case UPDATE_BRAND_SUCCESS:
-    //     const { brandId, ...rest } = payload.brand;
-    //     const newBrand = state.brand.map((br, index) => {
-    //       if (br.brandId === brandId) {
-    //         return {
-    //           ...br,
-    //           ...rest,
-    //         };
-    //       }
-    //       return br;
-    //     });
-    //     return {
-    //       ...state,
-    //       brand: newBrand,
-    //       error: null,
-    //     };
-    //   case UPDATE_BRAND_FAIL:
-    //     return {
-    //       ...state,
-    //       error: payload.error,
-        // };
+      case UPDATE_PROFILE_SUCCESS:
+       // const { profileId, ...rest } = payload.profile;
+        ///onsole.log('idreduces: ',profileId);
+        // const newProfile = state.profile.map((p, index) => {
+        //   if (p.profileId === profileId) {
+        //     return {
+        //       ...p,
+        //       ...rest,
+        //     };
+        //   }
+        //   return p;
+        // });
+        // console.log('id reduces: ',newProfile);
+        console.log('reduces: ',payload.profile);
+        return {
+          ...state,
+          profile: payload.profile,
+          error: null,
+        };
+      case UPDATE_PROFILE_FAIL:
+        return {
+          ...state,
+          error: payload.error,
+        };
   
       default:
         return state;

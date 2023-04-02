@@ -1,6 +1,8 @@
 import {
     GET_PROFILE_SUCCESS,
-    GET_PROFILE_FAIL
+    GET_PROFILE_FAIL,
+    UPDATE_PROFILE_SUCCESS,
+    UPDATE_PROFILE_FAIL
 
   } from "./types";
   import ProfileService from "../services/profile.service";
@@ -39,20 +41,21 @@ import {
 //     });
 //   };
   
-//   export const updateUser = (userId, user) => (dispatch) => {
-//     return UserService.updateUser(userId, user).then((response) => {
-//       if (response.data != null && Object.keys(response.data).length !== 0) {
-//         dispatch({
-//           type: UPDATE_USER_SUCCESS,
-//           payload: { user: response.data },
-//         });
-//         return Promise.resolve();
-//       } else {
-//         dispatch({
-//           type: UPDATE_USER_FAIL,
-//           payload: { error: response.message },
-//         });
-//         return Promise.reject();
-//       }
-//     });
-//   };
+  export const updateProfile = (id, profile) => (dispatch) => {
+    return ProfileService.updateProfile(id, profile).then((response) => {
+      if (response.data != null && Object.keys(response.data).length !== 0) {
+       // console.log('action: ',response);
+        dispatch({
+          type: UPDATE_PROFILE_SUCCESS,
+          payload: { profile: response.data },
+        });
+        return Promise.resolve();
+      } else {
+        dispatch({
+          type: UPDATE_PROFILE_FAIL,
+          payload: { error: response.message },
+        });
+        return Promise.reject();
+      }
+    });
+  };

@@ -7,8 +7,8 @@ import { getAllSales } from "../../actions/sale";
 import { getAllProducts } from "../../actions/product";
 
 import moment from "moment";
+import SaleDetailsModal from "./SaleDetailsModal";
 const {confirm}=Modal;
-//import CategoryModal from "./CategoryModal";
 const columns = [
   {
     title: "Sale ID",
@@ -197,13 +197,14 @@ const SaleDetails = () => {
           rowKey="id"
         />
       </div>
-      {/* <CategoryModal
+      <SaleDetailsModal
         openModal={openModal}
         setOpenModal={setOpenModal}
-        category={category}
-        setCategory={setCategory}
+        //sd={category}
+        //setCategory={setCategory}
+       sd= {saleDetails}
         action={action}
-      /> */}
+      />
     </>
   );
 };

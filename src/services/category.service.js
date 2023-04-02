@@ -13,7 +13,8 @@ const getAllCategories = () => {
     });
 };
 const insertCategory = (category) => {
-  console.log('bodyI: ',{...category});
+  
+  console.log('bodyI: ',JSON.stringify(category));
   return fetch(API_URL + "insertCategory", {
     method: "POST",
     mode: "cors",
@@ -22,8 +23,11 @@ const insertCategory = (category) => {
   })
     .then((res) => res.json())
     .then((json) => {
+      console.log('cate service: ',json);
       // localStorage.setItem("orderResult", JSON.stringify(json.data));
       return json;
+    }).catch((e)=>{
+      console.log('error: ',e);
     });
 };
 const updateCategory = (categoryId, category) => {
@@ -38,6 +42,7 @@ const updateCategory = (categoryId, category) => {
   
     .then((res) =>  res.json())
     .then((json) => {
+      console.log('data: ',json);
       // localStorage.setItem("orderResult", JSON.stringify(json.data));
       return json;
       

@@ -11,25 +11,27 @@ const getProfile = (userId) => {
       return json;
     });
 };
-// const updateUser = (userId, user) => {
-//   // console.log('body: ',JSON.stringify(body));
-//   return fetch(API_URL + `updateUser/${userId}`, {
-//     method: "PUT",
-//     mode: "cors",
-//     headers: authHeader(),
-//     body: JSON.stringify(user),
-//   })
-//     .then((res) => res.json())
-//     .then((json) => {
-//       // localStorage.setItem("orderResult", JSON.stringify(json.data));
-//       return json;
-//     })
-//     .catch((e) => {
-//       console.log("error: ", e);
-//     });
-// };
+const updateProfile = (id, profile) => {
+  // console.log('body: ',JSON.stringify(body));
+  return fetch(API_URL + `updateProfile/${id}`, {
+    method: "PUT",
+    mode: "cors",
+    headers: authHeader(),
+    body: JSON.stringify(profile),
+  })
+    .then((res) => res.json())
+    .then((json) => {
+      console.log('json: ',json);
+      // localStorage.setItem("orderResult", JSON.stringify(json.data));
+      return json;
+    })
+    .catch((e) => {
+      console.log("error: ", e);
+    });
+};
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getProfile,
+  updateProfile
 };
