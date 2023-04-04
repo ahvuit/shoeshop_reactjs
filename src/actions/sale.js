@@ -4,8 +4,9 @@ import {
   UPDATE_SALE_SUCCESS,
   UPDATE_SALE_FAIL,
   INSERT_SALE_SUCCESS,
-  INSERT_SALE_FAIL
+  INSERT_SALE_FAIL,
 } from "./types";
+
 import SaleService from "../services/sale.service";
 
 export const getAllSales = () => (dispatch) => {
@@ -24,6 +25,7 @@ export const getAllSales = () => (dispatch) => {
     }
   });
 };
+
 export const insertSale = (sale) => (dispatch) => {
   return SaleService.insertSale(sale).then((response) => {
     if (response.data != null && Object.keys(response.data).length !== 0) {

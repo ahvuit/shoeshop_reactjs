@@ -24,7 +24,6 @@ const getProductDetails = (productId) => {
     });
 };
 const insertProduct = (product) => {
- // console.log('bodyI: ',{...category});
   return fetch(API_URL + "insertProduct", {
     method: "POST",
     mode: "cors",
@@ -33,14 +32,11 @@ const insertProduct = (product) => {
   })
     .then((res) => res.json())
     .then((json) => {
-      console.log('pd service: ',json);
       // localStorage.setItem("orderResult", JSON.stringify(json.data));
       return json;
     });
 };
 const updateProduct= (productId, product) => {
- //console.log('id: ',productId);
-  // console.log('body: ',JSON.stringify(body));
   return fetch(API_URL + `updateProduct/${productId}`, {
     method: "PUT",
     mode: "cors",
@@ -50,11 +46,10 @@ const updateProduct= (productId, product) => {
   
     .then((res) =>  res.json())
     .then((json) => {
-     // console.log('ddd: ',json);
       // localStorage.setItem("orderResult", JSON.stringify(json.data));
       return json;
       
-    }).catch((e)=>{console.log('error: ',e)});
+    }).catch((e)=>{});
 };
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {

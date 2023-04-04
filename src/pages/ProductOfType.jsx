@@ -35,6 +35,9 @@ function ProductOfType({ prop1 }) {
   } else if (categoryId.includes("new")) {
     data =
       products !== null ? products.filter((item) => item.productNew) : null;
+  } else if (categoryId.includes("cate")) {
+    data =
+      products !== null ? products.filter((item) => item.categoryId===categoryId.slice(5)) : null;
   } else {
   }
   return (

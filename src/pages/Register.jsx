@@ -16,7 +16,7 @@ const Register = () => {
       ? msg.warning("confirmation password does not match")
       : dispatch(register(values.username.trim(), values.password.trim()))
           .then(() => {
-            msg.success("Register Successful");
+            msg.success("Đăng ký thành công");
             navigate("/login");
           })
           .catch(() => {
@@ -36,7 +36,7 @@ const Register = () => {
         <Typography.Title>Welcom to VHIT store!</Typography.Title>
         <Form.Item
           rules={[
-            { required: true, type: "email", message: "Please enter email" },
+            { required: true, type: "email", message: "Vui lòng nhập email" },
           ]}
           label="Email"
           name={"username"}
@@ -44,14 +44,14 @@ const Register = () => {
           <Input placeholder="Enter your email" />
         </Form.Item>
         <Form.Item
-          rules={[{ required: true, message: "Please enter password" }]}
+          rules={[{ required: true, message: "Vui lòng nhập mật khẩu" }]}
           label="Password"
           name={"password"}
         >
           <Input.Password placeholder="Enter your password" />
         </Form.Item>
         <Form.Item
-          rules={[{ required: true, message: "Please enter confirm password" }]}
+          rules={[{ required: true, message: "Vui lòng nhập mật khẩu xác nhận" }]}
           label="Password"
           name={"rePassword"}
         >
@@ -65,7 +65,7 @@ const Register = () => {
           htmlType="submit"
           block
         >
-          SignUp
+          Đăng ký
         </Button>
         <Link
           style={{
@@ -75,11 +75,7 @@ const Register = () => {
         >
           Bạn đã có tài khoản? Đăng nhập ngay
         </Link>
-        <Divider style={{ borderColor: "black" }}>or Login With</Divider>
-        <div className="socialLogin">
-          <GoogleOutlined className="socialIcon" onClick={login} />
-          <FacebookFilled className="socialIcon" style={{ color: "blue" }} />
-        </div>
+          
       </Form>
     </div>
   );

@@ -10,6 +10,7 @@ import {
   decreaseQuantity,
 } from "../../actions/cart";
 import AppCheckout from "./AppCheckout";
+import FormattedCurrency from "../FormattedCurrency";
 
 const AppCart = () => {
   const { Carts } = useSelector((state) => state.cart);
@@ -18,14 +19,15 @@ const AppCart = () => {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
+
   const columns = [
     {
-      title: "Name",
+      title: "Tên SP",
       dataIndex: "name",
       key: "name",
     },
     {
-      title: "Image",
+      title: "Hình ảnh",
       dataIndex: "image",
       key: "image",
       render: (image) => <img src={image} alt="Shoe" style={{ height: 80 }} />,
@@ -36,13 +38,13 @@ const AppCart = () => {
       key: "size",
     },
     {
-      title: "Price",
+      title: "Giá",
       dataIndex: "price",
       key: "price",
-      render: (price) => <span>${price}</span>,
+      render: (price) => <FormattedCurrency amount={price} />,
     },
     {
-      title: "Quantity",
+      title: "Số lượng",
       dataIndex: "quantity",
       key: "quantity",
       render: (quantity, record) => (
@@ -66,13 +68,13 @@ const AppCart = () => {
       ),
     },
     {
-      title: "Total Price",
+      title: "Tổng tiền",
       dataIndex: "total",
       key: "total",
-      render: (total) => <span>${parseFloat(total).toFixed(2)}</span>,
+      render: (total) => <FormattedCurrency amount={total} />,
     },
     {
-      title: "Action",
+      title: "  ",
       dataIndex: "action",
       key: "action",
       render: (_, record) => (
@@ -105,6 +107,7 @@ const AppCart = () => {
       navigate("/login");
     }
   };
+
   const { user } = useSelector((state) => state.auth);
   const [form] = Form.useForm();
 
@@ -134,7 +137,7 @@ const AppCart = () => {
         <ShoppingCartOutlined style={{ color: "var(--primary-color)" }} />
       </Badge>
       <Drawer
-        title="Shopping Cart"
+        title="Giỏ hàng"
         placement="right"
         open={cartDrawerOpen}
         onClose={() => {
@@ -152,7 +155,13 @@ const AppCart = () => {
           rowKey={(record) => record.productId + record.size}
         />
         <div style={{ marginTop: 20, marginBottom: 20 }}>
-          <h3>Total Price: ${parseFloat(totalCartPrice).toFixed(2)}</h3>
+          <h3>
+            Tổng tiền:{" "}
+            <span style={{ color: "red" }}>
+              {" "}
+              <FormattedCurrency amount={totalCartPrice} />
+            </span>
+          </h3>
         </div>
         <Button
           style={{ background: "var(--primary-color)", color: "#fff" }}
@@ -160,7 +169,7 @@ const AppCart = () => {
           onClick={handleCheckout}
           type="primary"
         >
-          Checkout Your Cart
+          Thanh toán giỏ hàng
         </Button>
       </Drawer>
       <AppCheckout

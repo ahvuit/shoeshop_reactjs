@@ -45,8 +45,6 @@ import {
         //   }
         //   return p;
         // });
-        // console.log('id reduces: ',newProfile);
-        console.log('reduces: ',payload.profile);
         return {
           ...state,
           profile: payload.profile,

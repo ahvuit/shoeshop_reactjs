@@ -14,7 +14,6 @@ const getAllCategories = () => {
 };
 const insertCategory = (category) => {
   
-  console.log('bodyI: ',JSON.stringify(category));
   return fetch(API_URL + "insertCategory", {
     method: "POST",
     mode: "cors",
@@ -23,16 +22,13 @@ const insertCategory = (category) => {
   })
     .then((res) => res.json())
     .then((json) => {
-      console.log('cate service: ',json);
       // localStorage.setItem("orderResult", JSON.stringify(json.data));
       return json;
     }).catch((e)=>{
-      console.log('error: ',e);
     });
 };
 const updateCategory = (categoryId, category) => {
  
-  // console.log('body: ',JSON.stringify(body));
   return fetch(API_URL + `updateCategory/${categoryId}`, {
     method: "PUT",
     mode: "cors",
@@ -42,11 +38,10 @@ const updateCategory = (categoryId, category) => {
   
     .then((res) =>  res.json())
     .then((json) => {
-      console.log('data: ',json);
       // localStorage.setItem("orderResult", JSON.stringify(json.data));
       return json;
       
-    }).catch((e)=>{console.log('error: ',e)});
+    }).catch((e)=>{});
 };
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {

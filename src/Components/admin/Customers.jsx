@@ -1,29 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { message as msg, Table, Space, Button, Image, Modal, Tag } from "antd";
+import { message as msg, Table, Space, Button, Modal, Tag } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { InfoOutlined, ExclamationCircleFilled } from "@ant-design/icons";
+
 import { getAllUsers, updateUser } from "../../actions/user";
 import UserModal from "./UserModal";
+import SearchComponent from "./SearchComponent";
+
 const { confirm } = Modal;
 const columns = [
   {
-    title: "Customer ID",
+    title: "Mã khách hàng",
     dataIndex: "userId",
     key: "userId",
   },
   {
-    title: "email",
+    title: "Email",
     dataIndex: "email",
     key: "email",
     sorter: (a, b) => a.email.length - b.email.length,
   },
   {
-    title: "Active?",
+    title: "Hoạt động?",
     dataIndex: "active",
     key: "active",
     render: (active) => {
       const color = active ? "green" : "red";
-      return <Tag color={color}>{active ? "Active" : "Inactive"}</Tag>;
+      return <Tag color={color}>{active ? "Mở" : "Khóa"}</Tag>;
     },
   },
 ];
@@ -34,20 +37,17 @@ const Customers = () => {
   const userss = users?.filter((user) => user.utype === "USR");
   const [openModal, setOpenModal] = useState(false);
   const dispatch = useDispatch();
-  const [user, setUser] = useState([]); 
-  const [action1, setAction1]= useState('');
-
-  // const [action, setAction] = useState("");
+  const [user, setUser] = useState([]);
+  const [action1, setAction1] = useState("");
+  const [filteredData, setFilteredData] = useState(null);
+  const options = { userId: "Mã khách hàng", email: "Email" };
   useEffect(() => {
     dispatch(getAllUsers())
       .then(() => {})
-      .catch(() => {
-        msg.error("Get all customer failed");
-      });
+      .catch(() => {});
   }, [dispatch]);
 
   const handleActive = (u, action) => {
-    // const {active,...rest}=u
     let uActive = null;
     if (action === "active") {
       uActive = { ...u, active: !u.active };
@@ -58,30 +58,29 @@ const Customers = () => {
     const content =
       action === "active"
         ? uActive?.active
-          ? "Do you want Unblock this account?"
-          : "Do you want Block this account?"
-        : "Do you want Reset Password this account?";
+          ? 'Bạn có muốn "kích hoạt" tài khoản này?'
+          : 'Bạn có muốn "khóa" tài khoản này?'
+        : 'Bạn có muốn "Đặt lại mật khẩu" tài khoản này không?';
     confirm({
-      title: "Are you sure?",
+      title: "Xác nhận?",
       icon: <ExclamationCircleFilled />,
       content: content,
       onOk() {
         dispatch(updateUser(uActive.userId, { ...uActive }))
           .then(() => {
-            msg.success("Update customer successful.");
+            msg.success("Cập nhật khách hàng thành công.");
           })
           .catch(() => {
-            msg.error("Update customer failed");
+            msg.error("Cập nhật khách hàng không thành công.");
           });
       },
-      onCancel() {
-      },
+      onCancel() {},
     });
   };
   const columnss = [
     ...columns,
     {
-      title: "Action",
+      title: "Thao tác",
       key: "action",
       render: (text, record) => (
         <Space size="middle">
@@ -92,7 +91,7 @@ const Customers = () => {
             onClick={() => {
               setOpenModal(true);
               setUser(record);
-               setAction1("see");
+              setAction1("see");
             }}
           />
           <Button
@@ -105,19 +104,21 @@ const Customers = () => {
           >
             Reset Pass
           </Button>
-            {record.email!==userCurrent.email?(<Button
-                //disabled={record.email !== userCurrent.email }
-                onClick={() => {
-                  const action = "active";
-                    handleActive(record,action);
-                  
-                }}
-                type="primary"
-                style={{ background: record.active ? "#f00" : "#0f0" }}
-              >
-                {record?.active ? "Block  " : "UnBlock"}
-              </Button>):('')}
-              
+          {record.email !== userCurrent.email ? (
+            <Button
+              //disabled={record.email !== userCurrent.email }
+              onClick={() => {
+                const action = "active";
+                handleActive(record, action);
+              }}
+              type="primary"
+              style={{ background: record.active ? "#f00" : "#0f0" }}
+            >
+              {record?.active ? "Block  " : "UnBlock"}
+            </Button>
+          ) : (
+            ""
+          )}
         </Space>
       ),
     },
@@ -127,17 +128,23 @@ const Customers = () => {
 
   return (
     <>
+      <SearchComponent
+        data={userss ? userss : []}
+        options={options}
+        setFilteredData={setFilteredData}
+      />
+
       <div style={{ overflowX: "auto" }}>
         {" "}
         <Table
           columns={columnss}
-          dataSource={userss ? userss : []}
+          dataSource={filteredData || userss}
           pagination={pagination}
           scroll={{
             y: "60vh",
           }}
           locale={{
-            emptyText: "Your brands is empty",
+            emptyText: "Danh sách khách hàng trống",
           }}
           rowKey="userId"
         />

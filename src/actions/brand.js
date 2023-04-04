@@ -4,8 +4,9 @@ import {
   INSERT_BRAND_SUCCESS,
   INSERT_BRAND_FAIL,
   UPDATE_BRAND_SUCCESS,
-  UPDATE_BRAND_FAIL
+  UPDATE_BRAND_FAIL,
 } from "./types";
+
 import BrandService from "../services/brand.service";
 
 export const getAllBrands = () => (dispatch) => {

@@ -17,7 +17,6 @@ export default function (state = initialState, action) {
         sale: null,
       };
       case INSERT_SALE_SUCCESS:
-        console.log('Isale reduces success: ',payload.sale);
         return {
           ...state,
           sale: [...state.sale, payload.sale],
@@ -25,7 +24,6 @@ export default function (state = initialState, action) {
           // categories: payload.categories,
         };
       case INSERT_SALE_FAIL:
-        console.log('Isale reduces fail: ',payload.error);
         return {
           ...state,
           error: payload.error,

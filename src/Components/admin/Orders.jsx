@@ -1,48 +1,52 @@
 import React, { useEffect, useState } from "react";
-import { message as msg, Table, Space, Button, Tag } from "antd";
+import { Table, Space, Button, Tag } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { InfoOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import { getAllOrders } from "../../actions/order";
+import { InfoOutlined, EditOutlined } from "@ant-design/icons";
 import moment from "moment";
+
+import { getAllOrders } from "../../actions/order";
 import OrderDetailsModal from "./OrderDetailsModal";
 import OrderModal from "./OrderModal";
+import SearchComponent from "./SearchComponent";
+import FormattedCurrency from "../FormattedCurrency";
+
 const columns = [
   {
-    title: "Order ID",
+    title: "Mã đơn hàng",
     dataIndex: "orderId",
     key: "orderId",
     width: "5vw",
   },
   {
-    title: "First Name",
+    title: "Tên KH",
     sorter: true,
     key: "firstName",
     render: (text, record) => `${record.lastName} ${record.firstName}`,
   },
-  { title: "Address", dataIndex: "address", key: "address" },
-  { title: "Phone", dataIndex: "phone", key: "phone" },
+  { title: "Địa chỉ", dataIndex: "address", key: "address" },
+  { title: "SĐT", dataIndex: "phone", key: "phone" },
   { title: "Email", dataIndex: "email", key: "email" },
-  { title: "Note", dataIndex: "note", key: "note", width: "15%" },
+  { title: "Ghi chú", dataIndex: "note", key: "note", width: "7vw" },
   {
-    title: "Total",
+    title: "Tổng tiền",
     dataIndex: "total",
     key: "total",
-    render: (text) => `$ ${text}`,
+    render: (text) => <FormattedCurrency amount={text} />,
   },
   {
-    title: "Booking Date",
+    title: "Ngày đặt hàng",
     dataIndex: "bookingDate",
     key: "bookingDate",
-    render: (text) => moment(text).format("DD/MM/YYYY"),
+    render: (text) => moment(text).format("DD-MM-YYYY"),
   },
   {
-    title: "Delivery Date",
+    title: "Ngày giao",
     dataIndex: "deliveryDate",
     key: "deliveryDate",
-    render: (text) => moment(text).format("DD/MM/YYYY"),
+    render: (text) => moment(text).format("DD-MM-YYYY"),
   },
   {
-    title: "Payment",
+    title: "Hình thức thanh toán",
     dataIndex: "momo",
     key: "momo",
     render: (momo) => {
@@ -51,7 +55,7 @@ const columns = [
     },
   },
   {
-    title: "Status",
+    title: "Tình trạng đơn hàng",
     dataIndex: "statusName",
     key: "statusName",
     sorter: (a, b) => a.statusName.length - b.statusName.length,
@@ -64,6 +68,15 @@ const Orders = () => {
   const [openModal1, setOpenModal1] = useState(false);
   const [orderId, setOrderId] = useState("");
   const [order, setOrder] = useState("");
+  const [filteredData, setFilteredData] = useState(null);
+
+  const options = {
+    orderId: "Mã đơn hàng",
+    firstName: "Tên khách hàng",
+    address: "Địa chỉ",
+    phone: "Số điện thoại",
+    email: "Email",
+  };
 
   const data = orders1.map((item, index) => {
     return { ...item.orderModel, key: index };
@@ -72,15 +85,13 @@ const Orders = () => {
   useEffect(() => {
     dispatch(getAllOrders())
       .then(() => {})
-      .catch(() => {
-        msg.error("Get all order failed");
-      });
+      .catch(() => {});
   }, [dispatch]);
 
   const columnss = [
     ...columns,
     {
-      title: "Action",
+      title: "Thao tác",
       key: "action",
       render: (text, record) => (
         <Space size="middle">
@@ -93,19 +104,19 @@ const Orders = () => {
               setOrderId(record.orderId);
             }}
           />
-          {record.statusId==='6405f221abfbac7f699ebbbe'||record.statusId==='6405f227abfbac7f699ebbbf'?
-          '':<Button
-            onClick={() => {
-              setOpenModal1(true);
-              setOrder(record);
-              // setAction('edit')
-              //   setOrderId(record.orderId);
-            }}
-            icon={<EditOutlined />}
-            style={{ background: "#ffc107" }}
-          />}
-
-          
+          {record.statusId === "6405f221abfbac7f699ebbbe" ||
+          record.statusId === "6405f227abfbac7f699ebbbf" ? (
+            ""
+          ) : (
+            <Button
+              onClick={() => {
+                setOpenModal1(true);
+                setOrder(record);
+              }}
+              icon={<EditOutlined />}
+              style={{ background: "#ffc107" }}
+            />
+          )}        
         </Space>
       ),
     },
@@ -115,17 +126,23 @@ const Orders = () => {
 
   return (
     <>
+      <SearchComponent
+        data={data ? data : []}
+        options={options}
+        setFilteredData={setFilteredData}
+      />
+
       <div style={{ overflowX: "auto" }}>
         {" "}
         <Table
           columns={columnss}
-          dataSource={data ? data : []}
+          dataSource={filteredData || data}
           pagination={pagination}
           scroll={{
             y: "60vh",
           }}
           locale={{
-            emptyText: "Your orders is empty",
+            emptyText: "Danh sách đơn hàng trống",
           }}
           rowKey="orderId"
         />

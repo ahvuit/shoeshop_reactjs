@@ -12,6 +12,7 @@ export const getNumberCart = () => {
     type: GET_NUMBER_CART,
   };
 };
+
 export const addToCart = (item, size) => {
   return (dispatch, getState) => {
     dispatch({ type: ADD_TO_CART, payload: { item, size } });

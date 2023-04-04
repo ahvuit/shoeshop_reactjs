@@ -12,10 +12,8 @@ const validateMessages = {
 const CategoryModal = (props) => {
   const { openModal, setOpenModal, category, action } = props;
   const { error } = useSelector((state) => state.category);
-
-  const dispatch = useDispatch();
-
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (Object.keys(category).length !== 0) {
@@ -30,7 +28,7 @@ const CategoryModal = (props) => {
       dispatch(insertCategory(iCategory))
         .then(() => {
           setOpenModal(false);
-          msg.success("Insert category successful");
+          msg.success("Thêm danh mục mới thành công!");
         })
         .catch(() => {});
     } else if (action === "edit") {
@@ -38,7 +36,7 @@ const CategoryModal = (props) => {
       dispatch(updateCategory(categoryId, rest))
         .then(() => {
           setOpenModal(false);
-          msg.success("Update category successful");
+          msg.success("Cập nhật danh mục thành công");
         })
         .catch(() => {});
     }
@@ -56,37 +54,45 @@ const CategoryModal = (props) => {
         onOk={() => setOpenModal(false)}
         onCancel={() => setOpenModal(false)}
         footer={null}
-        title="20px to Top"
+        title={
+          action === "add"
+            ? "Thêm mới danh mục"
+            : action === "edit"
+            ? `Chỉnh sửa danh mục "${category.categoryId}" `
+            : `Thông tin danh mục "${category.categoryId}"`
+        }
         style={{ top: 20 }}
       >
         <Form
           disabled={action === "see"}
           form={form}
           layout="vertical"
-          //   initialrest={product}
           onFinish={handleSubmit}
           validateMessages={validateMessages}
         >
-          <Form.Item name="categoryId" label="Category Id">
+          <Form.Item name="categoryId" label="Mã danh mục">
             <Input disabled />
           </Form.Item>
           <Form.Item
             name="categoryName"
-            label="Category Name"
             rules={[{ required: true }]}
+            label="Tên danh mục"
           >
             <Input />
           </Form.Item>
-
-          <Form.Item>
-            <Button
-              style={{ background: "var(--primary-color)" }}
-              type="primary"
-              htmlType="submit"
-            >
-              Submit
-            </Button>
-          </Form.Item>
+          {action === "see" ? (
+            ""
+          ) : (
+            <Form.Item>
+              <Button
+                style={{ background: "var(--primary-color)" }}
+                type="primary"
+                htmlType="submit"
+              >
+                Lưu
+              </Button>
+            </Form.Item>
+          )}
         </Form>
       </Modal>
     </>

@@ -9,9 +9,9 @@ import {
   GET_ALL_ORDER_SUCCESS,
   GET_ALL_ORDER_FAIL,
   UPDATE_ORDER_SUCCESS,
-  UPDATE_ORDER_FAIL
+  UPDATE_ORDER_FAIL,
 } from "./types";
- 
+
 import OrderService from "../services/order.service";
 
 export const addOrder = (orderModel, listOrderDetails) => (dispatch) => {
@@ -27,24 +27,22 @@ export const addOrder = (orderModel, listOrderDetails) => (dispatch) => {
           type: SET_MESSAGE,
           payload: response.message,
         });
-
         return Promise.resolve();
       } else {
         const message = response.message;
         dispatch({
           type: INSERT_ORDER_FAIL,
         });
-
         dispatch({
           type: SET_MESSAGE,
           payload: message,
         });
-
         return Promise.reject();
       }
     }
   );
 };
+
 export const getAllOrderByUserId = (userId) => (dispatch) => {
   return OrderService.getAllOrderByUserId(userId).then((data) => {
     if (data.data != null && Object.keys(data.data).length !== 0) {
@@ -61,6 +59,7 @@ export const getAllOrderByUserId = (userId) => (dispatch) => {
     }
   });
 };
+
 export const cancelOrder = (orderId) => (dispatch) => {
   return OrderService.cancelOrder(orderId).then((data) => {
     if (data.data != null && Object.keys(data.data).length !== 0) {
@@ -77,6 +76,7 @@ export const cancelOrder = (orderId) => (dispatch) => {
     }
   });
 };
+
 export const getAllOrders = () => (dispatch) => {
   return OrderService.getAllOrders().then((data) => {
     if (data.data != null && Object.keys(data.data).length !== 0) {
@@ -96,21 +96,19 @@ export const getAllOrders = () => (dispatch) => {
 };
 
 export const updateOrder = (orderId, order) => (dispatch) => {
-  return OrderService.updateOrder(orderId, order).then(
-    (response) => {
-      if (response.data != null && Object.keys(response.data).length !== 0) {
-        dispatch({
-          type: UPDATE_ORDER_SUCCESS,
-          payload: { order: response.data },
-        });
-        return Promise.resolve();
-      } else {
-        dispatch({
-          type: UPDATE_ORDER_FAIL,
-          payload: { error: response.message },
-        });
-        return Promise.reject();
-      }
+  return OrderService.updateOrder(orderId, order).then((response) => {
+    if (response.data != null && Object.keys(response.data).length !== 0) {
+      dispatch({
+        type: UPDATE_ORDER_SUCCESS,
+        payload: { order: response.data },
+      });
+      return Promise.resolve();
+    } else {
+      dispatch({
+        type: UPDATE_ORDER_FAIL,
+        payload: { error: response.message },
+      });
+      return Promise.reject();
     }
-  );
+  });
 };

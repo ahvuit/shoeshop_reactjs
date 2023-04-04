@@ -1,8 +1,9 @@
 import { LogoutOutlined, MenuOutlined } from "@ant-design/icons";
-import {  Layout, Menu } from "antd";
+import { Layout, Menu } from "antd";
 import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+
 import { logout } from "../../../actions/auth";
 
 const { Header } = Layout;
@@ -10,14 +11,12 @@ const HeaderAdmin = () => {
   const [current, setCurrent] = useState("");
   const dispatch = useDispatch();
 
-  // const {
-  //   token: { colorBgContainer },
-  // } = theme.useToken();
   const logOut = useCallback(() => {
     dispatch(logout());
     navigate("/login");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
+
   const navigate = useNavigate();
 
   const onMenuClick = (item) => {
@@ -28,6 +27,7 @@ const HeaderAdmin = () => {
     }
     setCurrent(item.key);
   };
+
   return (
     <Header
       style={{
@@ -42,8 +42,6 @@ const HeaderAdmin = () => {
         style={{
           float: "right",
           background: "var(--primary-color)",
-
-          // width: "100vw",
         }}
         selectedKeys={[current]}
         onClick={onMenuClick}
@@ -55,10 +53,10 @@ const HeaderAdmin = () => {
           title={<MenuOutlined style={{ color: "#fff" }} />}
         >
           <Menu.Item key="logout">
-            <LogoutOutlined /> Logout
+            <LogoutOutlined /> Đăng xuất
           </Menu.Item>
-          <Menu.Item key="admin/profile">Profile</Menu.Item>
-          <Menu.Item key="">Go Home</Menu.Item>
+          <Menu.Item key="admin/profile">Thông tin cá nhân</Menu.Item>
+          <Menu.Item key="">Về trang chủ</Menu.Item>
         </Menu.SubMenu>
       </Menu>
     </Header>

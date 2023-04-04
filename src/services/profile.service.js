@@ -12,7 +12,6 @@ const getProfile = (userId) => {
     });
 };
 const updateProfile = (id, profile) => {
-  // console.log('body: ',JSON.stringify(body));
   return fetch(API_URL + `updateProfile/${id}`, {
     method: "PUT",
     mode: "cors",
@@ -21,12 +20,10 @@ const updateProfile = (id, profile) => {
   })
     .then((res) => res.json())
     .then((json) => {
-      console.log('json: ',json);
       // localStorage.setItem("orderResult", JSON.stringify(json.data));
       return json;
     })
     .catch((e) => {
-      console.log("error: ", e);
     });
 };
 

@@ -1,115 +1,101 @@
 import React, { useEffect, useState } from "react";
-import { message as msg, Table, Space, Image, Button } from "antd";
+import { Table, Space, Image, Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { InfoOutlined, EditOutlined } from "@ant-design/icons";
-import { getAllSizeTables  } from "../../actions/sizetable";
+
+import { getAllSizeTables } from "../../actions/sizetable";
 import SizeTableModal from "./SizeTableModal";
+import SearchComponent from "./SearchComponent";
+
 const columns = [
   {
-    title: "Product Name",
+    title: "Tên sản phẩm",
     dataIndex: "name",
     key: "name",
     sorter: (a, b) => a.name.length - b.name.length,
   },
   {
-    title: "Image",
+    title: "Hình ảnh",
     dataIndex: "image",
     key: "image",
     render: (text) => <Image height={60} src={text} alt="Product" />,
   },
   {
-    title: "S38",
+    title: "Size 38",
     dataIndex: "s38",
     key: "s38",
   },
   {
-    title: "S39",
+    title: "Size 39",
     dataIndex: "s39",
     key: "s39",
   },
   {
-    title: "S40",
+    title: "Size 40",
     dataIndex: "s40",
     key: "s40",
   },
   {
-    title: "S41",
+    title: "Size 41",
     dataIndex: "s41",
     key: "s41",
   },
   {
-    title: "S42",
+    title: "Size 42",
     dataIndex: "s42",
     key: "s42",
   },
   {
-    title: "S43",
+    title: "Size 43",
     dataIndex: "s43",
     key: "s43",
   },
   {
-    title: "S44",
+    title: "Size 44",
     dataIndex: "s44",
     key: "s44",
   },
   {
-    title: "S45",
+    title: "Size 45",
     dataIndex: "s45",
     key: "s45",
   },
   {
-    title: "S46",
+    title: "Size 46",
     dataIndex: "s46",
     key: "s46",
   },
   {
-    title: "S47",
+    title: "Size 47",
     dataIndex: "s47",
     key: "s47",
   },
   {
-    title: "S48",
+    title: "Size 48",
     dataIndex: "s48",
     key: "s48",
   },
-  
 ];
 
 const SizeTables = () => {
   const { sizeTables } = useSelector((state) => state.sizeTable);
-  
-  //const { sizeTables } = useSelector((state) => state.sizeTable);
-//   const newProducts = products?.map((p, i) => {
-//     const {name,image,sizeTable,...r}= p
-
-//     return {name,image,...sizeTable};
-// })'
-// console.log('product11: ',newProducts);
   const [openModal, setOpenModal] = useState(false);
   const dispatch = useDispatch();
   const [sizeTable, setSizeTable] = useState([]);
   const [action, setAction] = useState("");
+  const [filteredData, setFilteredData] = useState(null);
+  const options = { name: "Tên sản phẩm", productId: "Mã sản phẩm" };
+
   useEffect(() => {
     dispatch(getAllSizeTables())
       .then(() => {})
-      .catch(() => {
-        msg.error("Get all sizeTable failed");
-      });
+      .catch(() => {});
   }, [dispatch]);
-//   useEffect(() => {
-//     // const product2 = [...products, products.name]
-//     const newProducts = products?.map((p, i) => {
-//         const {name,image,sizeTable,...r}= p
 
-//         return {name,image,...sizeTable};
-//     });
-//     //const {name,...rest}= products
-//     console.log("products: ", newProducts);
-//   }, products);
   const columnss = [
     ...columns,
     {
-      title: "Action",
+      title: "Thao tác",
       key: "action",
       render: (text, record) => (
         <Space size="middle">
@@ -141,21 +127,16 @@ const SizeTables = () => {
 
   return (
     <>
-      {/* <Button
-        style={{ background: "var(--primary-color)", margin: 10 }}
-        onClick={() => {
-          setOpenModal(true);
-          setCategory([]);
-          setAction("add");
-        }}
-      >
-        Add
-      </Button> */}
+      <SearchComponent
+        data={sizeTables ? sizeTables : []}
+        options={options}
+        setFilteredData={setFilteredData}
+      />
       <div style={{ overflowX: "auto" }}>
         {" "}
         <Table
           columns={columnss}
-          dataSource={sizeTables ? sizeTables : []}
+          dataSource={filteredData || sizeTables}
           pagination={pagination}
           scroll={{
             y: "60vh",
@@ -172,7 +153,7 @@ const SizeTables = () => {
         sizeTable={sizeTable}
         setSizeTable={setSizeTable}
         action={action}
-        />
+      />
     </>
   );
 };

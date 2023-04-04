@@ -9,10 +9,10 @@ import {
   Modal,
   Result,
 } from "antd";
+import { useNavigate } from "react-router-dom";
 
 import { addOrder } from "../../actions/order";
 import { clearCart } from "../../actions/cart";
-import { useNavigate } from "react-router-dom";
 
 const AppCheckout = (props) => {
   const {
@@ -22,6 +22,7 @@ const AppCheckout = (props) => {
     Carts,
     setCartDrawerOpen,
   } = props;
+
   const { TextArea } = Input;
   const [open, setOpen] = useState(false);
 
@@ -49,16 +50,16 @@ const AppCheckout = (props) => {
       return rest;
     });
     Modal.confirm({
-      title: "Do you want checkout this Cart?",
+      title: "Bạn muốn đặt hàng?",
       content: (
         <div>
-          <p>This action cannot be undone.</p>
-          <p>Are you sure you want to checkout this Cart?</p>
+          <p>Hành động này không thể được hoàn tác.</p>
+          <p>Bạn có chắc chắn muốn thanh toán Giỏ hàng này không?</p>
         </div>
       ),
-      okText: "Checkout",
+      okText: "Đặt hàng",
       okType: "primary",
-      cancelText: "Back",
+      cancelText: "Để sau",
 
       onOk() {
         dispatch(addOrder(orderModel, listOrderDetails))
@@ -67,11 +68,10 @@ const AppCheckout = (props) => {
             setCheckoutCartDrawerOpen(false);
             setCartDrawerOpen(false);
             setOpen(true);
-
-            msg.success("Add order successful!");
+            msg.success("Đặt hành thành công!");
           })
           .catch((error) => {
-            msg.error("Add order failed");
+            msg.error("Đã xảy ra lỗi, vui lòng thử lại");
           });
       },
       okButtonProps: {
@@ -96,37 +96,40 @@ const AppCheckout = (props) => {
       >
         <Form form={form} onFinish={handleFinish}>
           <Form.Item
-            name="firstName"
-            label="First name"
+            name="lastName"
+            label="Họ "
             labelCol={{ span: 6 }}
             wrapperCol={{ span: 18 }}
-            rules={[{ required: true, message: "Please type your first name" }]}
+            rules={[{ required: true, message: "Vui lòng nhập Họ của bạn" }]}
           >
-            <Input placeholder="Enter your first name..."></Input>
+            <Input placeholder="Nhập họ của bạn..."></Input>
           </Form.Item>
           <Form.Item
-            name="lastName"
-            label="Last name"
+            name="firstName"
+            label="Tên"
             labelCol={{ span: 6 }}
             wrapperCol={{ span: 18 }}
-            rules={[{ required: true, message: "Please type your last name" }]}
+            rules={[{ required: true, message: "Vui lòng nhập tên của bạn" }]}
           >
-            <Input placeholder="Enter your last name..."></Input>
+            <Input placeholder="Nhập tên của bạn..."></Input>
           </Form.Item>
           <Form.Item
             name="phone"
-            label="Phone"
+            label="Điện thoại"
             labelCol={{ span: 6 }}
             wrapperCol={{ span: 18 }}
             rules={[
-              { required: true, message: "Please type your phone number!" },
+              {
+                required: true,
+                message: "Vui lòng nhập số điện thoại của bạn!",
+              },
               {
                 pattern: /^[0-9]{10,11}$/,
-                message: "Please type a valid phone number!",
+                message: "Vui lòng nhập đúng định dạng số điện thoại!",
               },
             ]}
           >
-            <Input placeholder="Enter your phone..."></Input>
+            <Input placeholder="Nhập số điện thoại của bạn..."></Input>
           </Form.Item>
           <Form.Item
             name="email"
@@ -134,23 +137,25 @@ const AppCheckout = (props) => {
             labelCol={{ span: 6 }}
             wrapperCol={{ span: 18 }}
             rules={[
-              { required: true, type: "email", message: "Please type email" },
+              { required: true, type: "email", message: "Vui lòng nhập email" },
             ]}
           >
-            <Input placeholder="Enter your email..."></Input>
+            <Input placeholder="Nhập email của bạn..."></Input>
           </Form.Item>
           <Form.Item
             name="address"
-            label="Address"
+            label="Địa chỉ"
             labelCol={{ span: 6 }}
             wrapperCol={{ span: 18 }}
-            rules={[{ required: true, message: "Please type your address" }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập địa chỉ của bạn" },
+            ]}
           >
-            <Input placeholder="Enter your address..."></Input>
+            <Input placeholder="Nhập địa chỉ của bạn..."></Input>
           </Form.Item>
           <Form.Item
             name="note"
-            label="Note"
+            label="Ghi chú"
             labelCol={{ span: 6 }}
             wrapperCol={{ span: 18 }}
           >
@@ -161,7 +166,7 @@ const AppCheckout = (props) => {
                 height: 120,
                 marginBottom: 24,
               }}
-              placeholder="Enter your note"
+              placeholder="Nhập ghi chú của bạn"
             />
           </Form.Item>
           <Form.Item
@@ -181,7 +186,7 @@ const AppCheckout = (props) => {
               type="primary"
               htmlType="submit"
             >
-              Submit
+              Đặt hàng
             </Button>
           </Form.Item>
         </Form>
@@ -208,10 +213,10 @@ const AppModal = (props) => {
     >
       <Result
         status="success"
-        title="Successfully Purchased!"
-        subTitle={`Thanks! Order number: ${
+        title="Đặt hàng thành công!"
+        subTitle={`Xin cảm ơn! Đơn hàng có mã: ${
           orders.slice(-1)[0]?.orderModel.orderId
-        } will be delivered to you soon, please wait.`}
+        } sẽ được giao đến bạn sớm nhất có thể.`}
         extra={[
           <Button
             style={{ background: "var(--primary-color)" }}
@@ -222,7 +227,7 @@ const AppModal = (props) => {
               navigate("/");
             }}
           >
-            Continue to shop
+            Tiếp tục mua sắm
           </Button>,
         ]}
       />

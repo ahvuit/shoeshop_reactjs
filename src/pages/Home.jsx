@@ -40,7 +40,7 @@ const Home = () => {
             borderColor: "var(--primary-color)",
           }}
         >
-          Brand
+          Hãng giày
         </Divider>
         <Brand data={brand} />
 
@@ -50,7 +50,7 @@ const Home = () => {
             borderColor: "var(--primary-color)",
           }}
         >
-          Recommend for you
+          Gợi ý cho bạn
         </Divider>
         <Product data={recommendProduct} />
         <Divider
@@ -59,7 +59,7 @@ const Home = () => {
             borderColor: "var(--primary-color)",
           }}
         >
-          New Product
+          Sản phẩm mới
         </Divider>
         <Product data={newProduct} />
         <Divider
@@ -68,7 +68,7 @@ const Home = () => {
             borderColor: "var(--primary-color)",
           }}
         >
-          Sale Product
+          Sản phẩm khuyến mãi
         </Divider>
         <Product data={data} />
       </header>

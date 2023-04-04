@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { message as msg, Table, Space, Button } from "antd";
+import { Table, Space, Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { InfoOutlined, EditOutlined } from "@ant-design/icons";
+
 import { getAllCategories } from "../../actions/category";
 import CategoryModal from "./CategoryModal";
+import SearchComponent from "./SearchComponent";
+
 const columns = [
   {
-    title: "Category ID",
+    title: "Mã danh mục",
     dataIndex: "categoryId",
     key: "categoryId",
   },
   {
-    title: "Category Name",
+    title: "Tên danh mục",
     dataIndex: "categoryName",
     key: "categoryName",
     sorter: (a, b) => a.categoryName.length - b.categoryName.length,
@@ -21,21 +24,22 @@ const columns = [
 const Categories = () => {
   const { categories } = useSelector((state) => state.category);
   const [openModal, setOpenModal] = useState(false);
-  const dispatch = useDispatch();
   const [category, setCategory] = useState([]);
   const [action, setAction] = useState("");
+  const [filteredData, setFilteredData] = useState(null);
+  const dispatch = useDispatch();
+  const options = { categoryId: "Mã danh mục", categoryName: "Tên danh mục" };
+
   useEffect(() => {
     dispatch(getAllCategories())
       .then(() => {})
-      .catch(() => {
-        msg.error("Get all category failed");
-      });
+      .catch(() => {});
   }, [dispatch]);
 
   const columnss = [
     ...columns,
     {
-      title: "Action",
+      title: "Thao tác",
       key: "action",
       render: (text, record) => (
         <Space size="middle">
@@ -67,27 +71,34 @@ const Categories = () => {
 
   return (
     <>
-      <Button
-        style={{ background: "var(--primary-color)", margin: 10 }}
-        onClick={() => {
-          setOpenModal(true);
-          setCategory([]);
-          setAction("add");
-        }}
-      >
-        Add
-      </Button>
+      <Space>
+        <Button
+          style={{ background: "var(--primary-color)", margin: 10 }}
+          onClick={() => {
+            setOpenModal(true);
+            setCategory([]);
+            setAction("add");
+          }}
+        >
+          Thêm danh mục
+        </Button>
+        <SearchComponent
+          data={categories ? categories : []}
+          options={options}
+          setFilteredData={setFilteredData}
+        />
+      </Space>
       <div style={{ overflowX: "auto" }}>
         {" "}
         <Table
           columns={columnss}
-          dataSource={categories ? categories : []}
+          dataSource={filteredData || categories}
           pagination={pagination}
           scroll={{
             y: "60vh",
           }}
           locale={{
-            emptyText: "Your categories is empty",
+            emptyText: "Danh sách danh mục trống",
           }}
           rowKey="categoryId"
         />

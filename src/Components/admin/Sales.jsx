@@ -1,29 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { message as msg, Table, Space, Button, Image } from "antd";
+import { Table, Space, Button, Image } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { InfoOutlined, EditOutlined } from "@ant-design/icons";
-import { getAllSales } from "../../actions/sale";
 import moment from "moment";
+
+import { getAllSales } from "../../actions/sale";
 import SaleModal from "./SaleModal";
+import SearchComponent from "./SearchComponent";
+
 const columns = [
   {
-    title: "Sale ID",
+    title: "Mã CT khuyến mãi",
     dataIndex: "salesId",
     key: "brandId",
   },
   {
-    title: "Sale Name",
+    title: "Tên CT khuyến mãi",
     dataIndex: "salesName",
     key: "brandName",
     sorter: (a, b) => a.brandName.length - b.brandName.length,
   },
   {
-    title: "Content",
+    title: "Nội dung KM",
     dataIndex: "content",
     key: "content",
   },
   {
-    title: "Percent",
+    title: "Phần trăm KM",
     dataIndex: "percent",
     key: "percent",
     render: (text) => <span>{text}%</span>,
@@ -35,19 +38,16 @@ const columns = [
     render: (text) => <Image height={70} src={text} alt="Sales" />,
   },
   {
-    title: "Start Day",
+    title: "Ngày bắt đầu",
     dataIndex: "startDay",
     key: "startDay",
     render: (text) => moment(text).format("DD-MM-YYYY"),
-
-    //render: (text) => <Image height={70} src={text} alt="Sales" />,
   },
   {
-    title: "End Day",
+    title: "Ngày kết thúc",
     dataIndex: "endDay",
     key: "endDay",
     render: (text) => moment(text).format("DD-MM-YYYY"),
-    // render: (text) => <Image height={70} src={text} alt="Sales" />,
   },
 ];
 
@@ -57,22 +57,28 @@ const Sales = () => {
   const [sale1, setSale1] = useState([]);
   const dispatch = useDispatch();
   const [sales, setSales] = useState([]);
+  const [filteredData, setFilteredData] = useState(null);
   const [action, setAction] = useState("");
-  console.log("sale: ", sale);
+
+  const options = {
+    salesName: "Tên chương trình",
+    salesId: "Mã chương trình",
+    content: "Nội dung",
+  };
+
   useEffect(() => {
     dispatch(getAllSales())
       .then(() => {})
-      .catch(() => {
-        msg.error("Get all brand failed");
-      });
+      .catch(() => {});
   }, [dispatch]);
+
   useEffect(() => {
     setSale1(sale);
   }, [sale]);
   const columnss = [
     ...columns,
     {
-      title: "Action",
+      title: "Thao tác",
       key: "action",
       render: (text, record) => (
         <Space size="middle">
@@ -108,72 +114,78 @@ const Sales = () => {
         <Button
           style={{ background: "var(--primary-color)", margin: 10 }}
           onClick={() => {
-            setOpenModal(true);
-            setSales([]);
-            setAction("add");
+            const s = sale.filter((ss) => {
+              const date1 = moment(ss.startDay).format("YYYY-MM-DD");
+              const current = moment();
+              const h = current.diff(date1, "hours", true);
+              return h < 0;
+            });
+            setSale1(s);
           }}
         >
-          Add
+          Sắp diễn ra
         </Button>
         <Button
           style={{ background: "var(--primary-color)", margin: 10 }}
           onClick={() => {
             const s = sale.filter((ss) => {
-              const date1 = moment(ss.startDay).format("YYYY-MM-DD")
-            const current = moment()
-           const h= current.diff(date1, "hours", true)
-           return h<0
-              
+              const date1 = moment(ss.endDay).format("YYYY-MM-DD");
+              const date2 = moment(ss.startDay).format("YYYY-MM-DD");
+              const current = moment();
+              const h = current.diff(date1, "hours", true);
+              const h2 = current.diff(date2, "hours", true);
+              return h <= 0 && h2 >= 0;
             });
-            setSale1(s)
-            
+            setSale1(s);
           }}
         >
-          Chua Sale
+          Đang diễn ra
         </Button>
         <Button
           style={{ background: "var(--primary-color)", margin: 10 }}
           onClick={() => {
-            
             const s = sale.filter((ss) => {
-              const date1 = moment(ss.endDay).format("YYYY-MM-DD")
-              const date2 = moment(ss.startDay).format("YYYY-MM-DD")
-            const current = moment()
-           const h= current.diff(date1, "hours", true)
-           const h2= current.diff(date2, "hours", true)
-           return h<=0 && h2>=0
-              
+              const date1 = moment(ss.endDay).format("YYYY-MM-DD");
+              const current = moment();
+              const h = current.diff(date1, "hours", true);
+              return h > 0;
             });
-            setSale1(s)
+            setSale1(s);
           }}
         >
-          Dang Sale
-        </Button>
-        <Button
-          style={{ background: "var(--primary-color)", margin: 10 }}
-          onClick={() => {const s = sale.filter((ss) => {
-              const date1 = moment(ss.endDay).format("YYYY-MM-DD")
-            const current = moment()
-           const h= current.diff(date1, "hours", true)
-           return h>  0
-              
-            });
-            setSale1(s)}}
-        >
-          Da Sale
+          Đã kết thúc
         </Button>
       </Space>
+      <div>
+        <Space>
+          <Button
+            style={{ background: "var(--primary-color)", margin: 10 }}
+            onClick={() => {
+              setOpenModal(true);
+              setSales([]);
+              setAction("add");
+            }}
+          >
+            Thêm chương tình khuyến mãi mới
+          </Button>
+          <SearchComponent
+            data={sale1 ? sale1 : []}
+            options={options}
+            setFilteredData={setFilteredData}
+          />
+        </Space>
+      </div>
       <div style={{ overflowX: "auto" }}>
         {" "}
         <Table
           columns={columnss}
-          dataSource={sale1 ? sale1 : []}
+          dataSource={filteredData || sale1}
           pagination={pagination}
           scroll={{
             y: "60vh",
           }}
           locale={{
-            emptyText: "Your brands is empty",
+            emptyText: "Danh sách chương trình khuyến mãi trống",
           }}
           rowKey="salesId"
         />

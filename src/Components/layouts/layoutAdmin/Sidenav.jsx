@@ -1,20 +1,17 @@
 import {
   FileOutlined,
   PieChartOutlined,
-  UserOutlined,
   DesktopOutlined,
   ShoppingCartOutlined,
   TeamOutlined,
-  KeyOutlined,
-  TableOutlined
+  TableOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-
 
 const { Sider } = Layout;
+
 function getItem(label, key, icon, children, type) {
   return {
     key,
@@ -24,9 +21,9 @@ function getItem(label, key, icon, children, type) {
     type,
   };
 }
+
 const items = [
   getItem("Thống kê", "statistical", <FileOutlined />),
-
   getItem(
     "Sản phẩm",
     "pdt",
@@ -47,33 +44,19 @@ const items = [
       getItem("Quản lý bảng size", "sizetable", <TableOutlined />),
       getItem("Quản lý hãng giày", "brands", <DesktopOutlined />),
       getItem("Quản lý khuyến mãi", "sales", <PieChartOutlined />),
-      // getItem("Quản lý tài khoản", "accounts", <UserOutlined />),
       getItem("Quản lý khách hàng", "customers", <PieChartOutlined />),
-      getItem("Quản lý nhân viên", "employees", <TeamOutlined/>),
+      getItem("Quản lý nhân viên", "employees", <TeamOutlined />),
     ],
     "group"
   ),
-
-//   getItem("User", "sub1", <UserOutlined />, [
-//     getItem("Tom", "3"),
-//     getItem("Bill", "4"),
-//     getItem("Alex", "5"),
-//   ]),
-//   getItem("Team", "sub2", <TeamOutlined />, [
-//     getItem("Team 1", "6"),
-//     getItem("Team 2", "8"),
-//   ]),
-//   getItem("Files", "9", <FileOutlined />),
 ];
 
 const Slidenav = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const [current, setCurrent] = useState('statistical');
-  const dispatch = useDispatch();
+  const [current, setCurrent] = useState("statistical");
   const navigate = useNavigate();
   const onMenuClick = (item) => {
-    
-      navigate(`/admin/${item.key}`);
+    navigate(`/admin/${item.key}`);
     setCurrent(item.key);
   };
   return (
@@ -94,7 +77,7 @@ const Slidenav = () => {
         theme="light"
         defaultSelectedKeys={[current]}
         mode="inline"
-        onClick={onMenuClick}        
+        onClick={onMenuClick}
         items={items}
         style={{ background: "var(--primary-color)" }}
       />

@@ -27,7 +27,6 @@ const ImageUpload = (props)=>{
     // const File=newFileList;
     // const data1 = upload(File[0].originFileObj);
     upload(File[0].originFileObj);
-    // console.log('url: ',data1);
    // setImage(data1);
 
     // setImage( URL.createObjectURL(File[0].originFileObj))
@@ -44,7 +43,6 @@ const ImageUpload = (props)=>{
         data = response.data["secure_url"];
       });
     setImage(data);
-    console.log('imgURL: ',data);
     //return data;
   };
   const uploadButton = (
@@ -55,7 +53,7 @@ const ImageUpload = (props)=>{
           marginTop: 8,
         }}
       >
-        Upload
+        Tải hình ảnh
       </div>
     </div>
   );

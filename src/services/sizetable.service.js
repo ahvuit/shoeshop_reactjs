@@ -13,7 +13,6 @@ const getAllSizeTables = () => {
     });
 };
 // const insertSizetable = (sizetable) => {
-//   //console.log('bodyI: ',{...category});
 //   return fetch(API_URL + "insertCategory", {
 //     method: "POST",
 //     mode: "cors",
@@ -28,7 +27,6 @@ const getAllSizeTables = () => {
 // };
 const updateSizetable = (sizeTableId, sizeTable) => {
  
-  // console.log('body: ',JSON.stringify(body));
   return fetch(API_URL + `updateSizeTable/${sizeTableId}`, {
     method: "PUT",
     mode: "cors",
@@ -41,7 +39,7 @@ const updateSizetable = (sizeTableId, sizeTable) => {
       // localStorage.setItem("orderResult", JSON.stringify(json.data));
       return json;
       
-    }).catch((e)=>{console.log('error: ',e)});
+    }).catch((e)=>{});
 };
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {

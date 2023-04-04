@@ -54,7 +54,7 @@ export default function (state = initialState, action) {
         error: payload.error,
       };
     case CANCEL_ORDER_SUCCESS:
-      const { orderId, statusId, ...rest } = payload.order;
+      const { orderId, statusId } = payload.order;
       const newOrders = state.orders.map((order, index) => {
         if (order.orderModel.orderId === orderId) {
           return {
@@ -80,10 +80,9 @@ export default function (state = initialState, action) {
         error: payload.error,
       };
     case UPDATE_ORDER_SUCCESS:
-      const { orderId: a, statusId: b, ...rest1 } = payload.order;
+      const { orderId: a, statusId: b} = payload.order;
       const newOrders1 = state.orders1.map((o, index) => {
         if (o.orderModel.orderId === a) {
-          console.log("loi reduce11111: ", o);
           const c =
             b === "6405f204abfbac7f699ebbbb"
               ? "Đang chờ duyệt"
@@ -103,7 +102,6 @@ export default function (state = initialState, action) {
             },
           };
         }
-        console.log("loi reduces: ", o);
         return o;
       });
       return {

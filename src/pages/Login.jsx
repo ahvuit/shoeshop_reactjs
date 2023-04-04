@@ -15,7 +15,7 @@ const Login = () => {
   const onFinish = (values) => {
     dispatch(login(values.email.trim(), values.password.trim()))
       .then(() => {
-        msg.success("Login Success");
+        msg.success("Đăng nhập thành công");
         navigate("/profile");
       })
       .catch(() => {});
@@ -41,19 +41,24 @@ const Login = () => {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Typography.Title>Welcom Back!</Typography.Title>
+        <Typography.Title style={{ textAlign:"center"  }}>Welcom Back!</Typography.Title>
         <Form.Item
+        
+        labelCol={{ span: 7 }}
+        wrapperCol={{ span: 18 }}
           rules={[
-            { required: true, type: "email", message: "Please enter email" },
+            { required: true, type: "email", message: "Vui lòng nhập email" },
           ]}
           label="Email"
           name={"email"}
         >
           <Input placeholder="Enter your email" />
         </Form.Item>
-        <Form.Item
-          rules={[{ required: true, message: "Please enter password" }]}
-          label="Password"
+        <Form.Item 
+            labelCol={{ span: 7 }}
+            wrapperCol={{ span: 18 }}
+          rules={[{ required: true, message: "Vui lòng nhập mật khẩu" }]}
+          label="Mật khẩu"
           name={"password"}
         >
           <Input.Password placeholder="Enter your password" />
@@ -66,7 +71,7 @@ const Login = () => {
           htmlType="submit"
           block
         >
-          Login
+          Đăng nhập
         </Button>
         <Link
           style={{

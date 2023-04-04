@@ -1,39 +1,24 @@
 import React, { useEffect, useState } from "react";
-import {
-  Space,
-  Button,
-  Modal,
-  Form,
-  Input,
-  InputNumber,
-  Select,
-  Rate,
-  message as msg
-} from "antd";
+import { Button, Modal, Form, Input, message as msg } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 
 import ImageUpload from "../ImageUpload";
-import { insertBrand,updateBrand } from "../../actions/brand";
+import { insertBrand, updateBrand } from "../../actions/brand";
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
   required: "${label} is required",
 };
 const BrandModal = (props) => {
-  const { openModal, setOpenModal, brands,setBrands , action } = props;
-//   const { brand } = useSelector((state) => state.brand);
-  const { error} = useSelector((state) => state.brand);
+  const { openModal, setOpenModal, brands, action } = props;
+  const { error } = useSelector((state) => state.brand);
   const [image, setImage] = useState("");
-  const dispatch = useDispatch();
-
- 
   const [form] = Form.useForm();
-
+  const dispatch = useDispatch();
   useEffect(() => {
     if (Object.keys(brands).length !== 0) {
       setImage(brands.logo);
     }
-
   }, [brands]);
 
   useEffect(() => {
@@ -47,32 +32,34 @@ const BrandModal = (props) => {
           url: `${image}`,
         },
       ]);
-    } else if(image===''){
+    } else if (image === "") {
       form.resetFields();
       setFileList([]);
     }
   }, [form, brands, image]);
   const handleSubmit = (values) => {
-    console.log("value: ", { ...values, logo: image });
     if (action === "add") {
-        const iCategory = { ...values, brandId: null ,logo:image };
-        dispatch(insertBrand(iCategory))
-          .then(() => {
-            setOpenModal(false);
-            msg.success("Insert brand successful");
-          })
-          .catch(() => {});
-      } else if (action === "edit") {
-        const { brandId, ...rest } = values;
-        const uBrand = {...values,logo:image}
-        dispatch(updateBrand(brandId, uBrand))
-          .then(() => {
-            setOpenModal(false);
-            msg.success("Update category successful");
-          })
-          .catch(() => {});
-        console.log('heheheh');
-      }
+      const iCategory = { ...values, brandId: null, logo: image };
+      dispatch(insertBrand(iCategory))
+        .then(() => {
+          setOpenModal(false);
+          msg.success("Thêm hãng mới thành công");
+        })
+        .catch(() => {
+          msg.error("Đã xảy ra lỗi, vui lòng thử lại sau");
+        });
+    } else if (action === "edit") {
+      const { brandId } = values;
+      const uBrand = { ...values, logo: image };
+      dispatch(updateBrand(brandId, uBrand))
+        .then(() => {
+          setOpenModal(false);
+          msg.success("Cập nhật hãng thành công");
+        })
+        .catch(() => {
+          msg.error("Đã xảy ra lỗi, vui lòng thử lại sau");
+        });
+    }
   };
   useEffect(() => {
     if (error) {
@@ -84,19 +71,21 @@ const BrandModal = (props) => {
   return (
     <>
       <Modal
-        title="Modal 1000px width"
+        title={
+          action === "add"
+            ? `Thêm hãng mới`
+            : action === "edit"
+            ? `Chỉnh sửa hãng "${brands.brandId}"`
+            : `Thông tin hãng "${brands.brandId}"`
+        }
         centered
         open={openModal}
         onOk={() => setOpenModal(false)}
         onCancel={() => {
-            
-            setImage('');
-            setOpenModal(false);
-            
-          
+          setImage("");
+          setOpenModal(false);
         }}
         footer={null}
-        // width={1000}
       >
         <Form
           disabled={action === "see"}
@@ -105,16 +94,23 @@ const BrandModal = (props) => {
           onFinish={handleSubmit}
           validateMessages={validateMessages}
         >
-          <Form.Item name="brandId" label="Brand Id">
+          <Form.Item name="brandId" label="Mã hãng">
             <Input disabled />
           </Form.Item>
-          <Form.Item name="brandName" label="Brand Name" rules={[{ required: true }]}>
+          <Form.Item
+            name="brandName"
+            label="Tên hãng"
+            rules={[{ required: true }]}
+          >
             <Input />
           </Form.Item>
-          <Form.Item name="information" label="Information" rules={[{ required: true }]}>
+          <Form.Item
+            name="information"
+            label="Thông tin hãng"
+            rules={[{ required: true }]}
+          >
             <Input.TextArea />
           </Form.Item>
-          
 
           <ImageUpload
             setFileList={setFileList}
@@ -122,15 +118,19 @@ const BrandModal = (props) => {
             image={image}
             setImage={setImage}
           />
-          <Form.Item>
-            <Button
-              style={{ background: "var(--primary-color)" }}
-              type="primary"
-              htmlType="submit"
-            >
-              Submit
-            </Button>
-          </Form.Item>
+          {action === "see" ? (
+            ""
+          ) : (
+            <Form.Item>
+              <Button
+                style={{ background: "var(--primary-color)" }}
+                type="primary"
+                htmlType="submit"
+              >
+                Lưu
+              </Button>
+            </Form.Item>
+          )}
         </Form>
       </Modal>
     </>

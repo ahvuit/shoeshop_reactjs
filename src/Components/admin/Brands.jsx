@@ -1,28 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { message as msg, Table, Space, Button ,Image } from "antd";
+import { Table, Space, Button, Image } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { InfoOutlined, EditOutlined } from "@ant-design/icons";
+
 import { getAllBrands } from "../../actions/brand";
 import BrandModal from "./BrandModal";
+import SearchComponent from "./SearchComponent";
+
 const columns = [
   {
-    title: "Brand ID",
+    title: "Mã hãng",
     dataIndex: "brandId",
     key: "brandId",
   },
   {
-    title: "Brand Name",
+    title: "Tên hãng",
     dataIndex: "brandName",
     key: "brandName",
     sorter: (a, b) => a.brandName.length - b.brandName.length,
   },
   {
-    title: "Information",
+    title: "Thông tin hãng",
     dataIndex: "information",
     key: "information",
   },
   {
-    title: "Logo",
+    title: "Logo hãng",
     dataIndex: "logo",
     key: "logo",
     render: (text) => <Image height={70} src={text} alt="Brand" />,
@@ -35,18 +38,19 @@ const Brands = () => {
   const dispatch = useDispatch();
   const [brands, setBrands] = useState([]);
   const [action, setAction] = useState("");
+  const [filteredData, setFilteredData] = useState(null);
+  const options = { brandName: "Tên hãng", brandId: "Mã hãng" };
+
   useEffect(() => {
     dispatch(getAllBrands())
       .then(() => {})
-      .catch(() => {
-        msg.error("Get all brand failed");
-      });
+      .catch(() => {});
   }, [dispatch]);
 
   const columnss = [
     ...columns,
     {
-      title: "Action",
+      title: "Thao tác",
       key: "action",
       render: (text, record) => (
         <Space size="middle">
@@ -78,28 +82,34 @@ const Brands = () => {
 
   return (
     <>
-      <Button
-        style={{ background: "var(--primary-color)", margin: 10 }}
-        onClick={() => {
-          setOpenModal(true);
-          setBrands([]);
-          setAction("add");
-          
-        }}
-      >
-        Add
-      </Button>
+      <Space>
+        <Button
+          style={{ background: "var(--primary-color)", margin: 10 }}
+          onClick={() => {
+            setOpenModal(true);
+            setBrands([]);
+            setAction("add");
+          }}
+        >
+          Thêm mới hãng
+        </Button>
+        <SearchComponent
+          data={brand ? brand : []}
+          options={options}
+          setFilteredData={setFilteredData}
+        />
+      </Space>
       <div style={{ overflowX: "auto" }}>
         {" "}
         <Table
           columns={columnss}
-          dataSource={brand ? brand : []}
+          dataSource={filteredData || brand}
           pagination={pagination}
           scroll={{
             y: "60vh",
           }}
           locale={{
-            emptyText: "Your brands is empty",
+            emptyText: "Danh sách hãng trống",
           }}
           rowKey="brandId"
         />

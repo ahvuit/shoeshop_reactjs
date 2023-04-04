@@ -6,11 +6,15 @@ import { ShoppingCartOutlined } from "@ant-design/icons";
 
 import { selectedProduct, remove_SelectedProduct } from "../../actions/product";
 import { addToCart } from "../../actions/cart";
+import FormattedCurrency from "../FormattedCurrency";
+
 const { Title, Text } = Typography;
+
 const ProductDetail = () => {
   const { productId } = useParams();
   const { product } = useSelector((state) => state.product);
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (productId && productId !== "") {
       dispatch(selectedProduct(productId))
@@ -26,11 +30,14 @@ const ProductDetail = () => {
       dispatch(remove_SelectedProduct());
     };
   }, [dispatch, productId]);
+
   const [size, setSize] = useState(null);
+
   const handleSizeChange = (e) => {
     const selectedSize = e.target.value;
     setSize(selectedSize);
   };
+
   const sizeButtonStyle = (s) => {
     if (size === s) {
       return {
@@ -63,36 +70,35 @@ const ProductDetail = () => {
               <Card>
                 <Title level={3}>{product.name}</Title>
                 <Rate disabled allowHalf defaultValue={product.rate} />
-
                 <Row justify="space-between" align="middle">
                   <Col>
                     {product.sales ? (
                       <>
                         <Text style={{ fontSize: "30px" }} strong type="danger">
                           {" "}
-                          $
-                          {parseFloat(
-                            product.price -
+                          <FormattedCurrency
+                            amount={
+                              product.price -
                               (product.price * product.sales.percent) / 100
-                          ).toFixed(2)}{" "}
+                            }
+                          />{" "}
                           {"  "}
                         </Text>
                         <Text
                           style={{ fontSize: "30px", color: "#ccc" }}
                           delete
                         >
-                          ${parseFloat(product.price).toFixed(2)}
+                          <FormattedCurrency amount={product.price} />
                         </Text>
                       </>
                     ) : (
                       <Text style={{ fontSize: "30px" }} strong type="danger">
                         {" "}
-                        ${parseFloat(product.price).toFixed(2)}
+                        <FormattedCurrency amount={product.price} />
                       </Text>
                     )}
                   </Col>
                 </Row>
-
                 <Text type="secondary">{product.description}</Text>
                 <Row gutter={[16, 16]}>
                   <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -137,7 +143,7 @@ const ProductDetail = () => {
                   ))}
                 </Col> */}
                   <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Text strong>Quantity:</Text>
+                    <Text strong>Số lượng:</Text>
                     <br />
                     <Text>{product.stock}</Text>
                   </Col>
@@ -162,9 +168,9 @@ const ProductDetail = () => {
     </div>
   );
 };
+
 const AddToCartButton = (props) => {
   let { product, size } = props;
-
   if (product.sales) {
     product = {
       ...product,
@@ -184,7 +190,7 @@ const AddToCartButton = (props) => {
       }}
     >
       <ShoppingCartOutlined />
-      &nbsp; Add to Cart
+      &nbsp; Thêm vào giỏ hàng
     </Button>
   );
 };

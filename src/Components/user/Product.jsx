@@ -1,7 +1,9 @@
-import { Card, List, Image, Typography, Badge, Rate, Button } from "antd";
+import { Card, List, Image, Typography, Badge, Rate } from "antd";
 import React, { useEffect, useState, createRef, useRef } from "react";
 import { Pagination } from "antd";
 import { useParams, useNavigate } from "react-router-dom";
+
+import FormattedCurrency from "../FormattedCurrency";
 
 function Products({ data }) {
   const navigate = useNavigate();
@@ -9,10 +11,13 @@ function Products({ data }) {
   // ví dụ như số trang hiện tại, số lượng bản ghi trên mỗi trang, và danh sách các bản ghi
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(10);
+
   useEffect(() => {
     setCurrentPage(1);
   }, [data]);
+
   const { categoryId } = useParams();
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
@@ -22,6 +27,7 @@ function Products({ data }) {
     ? data.slice(indexOfFirstItem, indexOfLastItem)
     : null;
   const myRef = useRef({});
+
   return (
     <div>
       <List
@@ -57,7 +63,6 @@ function Products({ data }) {
                 actions={[
                   <>
                     <Rate disabled allowHalf defaultValue={products.rate} />
-                    <Button type="link">Add to Cart</Button>
                   </>,
                 ]}
                 onClick={() => navigate(`/product/${products.productId}`)}
@@ -68,22 +73,23 @@ function Products({ data }) {
                       <Typography.Paragraph>
                         Price:
                         <Typography.Text type="danger">
-                          $
-                          {parseFloat(
-                            products.price -
+                          <FormattedCurrency
+                            amount={
+                              products.price -
                               (products.price * products.sales.percent) / 100
-                          ).toFixed(2)}{" "}
+                            }
+                          />{" "}
                           {"    "}
                         </Typography.Text>
                         <Typography.Text delete>
-                          ${parseFloat(products.price).toFixed(2)}
+                          <FormattedCurrency amount={products.price} />
                         </Typography.Text>
                       </Typography.Paragraph>
                     ) : (
                       <Typography.Paragraph>
                         Price:
                         <Typography.Text type="danger">
-                          ${parseFloat(products.price).toFixed(2)}
+                          <FormattedCurrency amount={products.price} />
                         </Typography.Text>
                       </Typography.Paragraph>
                     )

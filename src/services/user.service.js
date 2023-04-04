@@ -28,7 +28,6 @@ const insertUser = (user) => {
     });
 };
 const updateUser = (userId, user) => {
-  // console.log('body: ',JSON.stringify(body));
   return fetch(API_URL + `updateUser/${userId}`, {
     method: "PUT",
     mode: "cors",
@@ -41,7 +40,6 @@ const updateUser = (userId, user) => {
       return json;
     })
     .catch((e) => {
-      console.log("error: ", e);
     });
 };
 // eslint-disable-next-line import/no-anonymous-default-export

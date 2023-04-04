@@ -6,6 +6,7 @@ import {
   UPDATE_CATEGORY_SUCCESS,
   UPDATE_CATEGORY_FAIL,
 } from "./types";
+
 import CategoryService from "../services/category.service";
 
 export const getAllCategories = () => (dispatch) => {

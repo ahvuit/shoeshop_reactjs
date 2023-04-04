@@ -1,21 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { message as msg, Table, Space, Button, Select, Modal , Image, Typography } from "antd";
+import {
+  message as msg,
+  Table,
+  Space,
+  Button,
+  Select,
+  Modal,
+  Image,
+  Typography,
+} from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { InfoOutlined,CloseOutlined , ExclamationCircleFilled ,DeleteOutlined} from "@ant-design/icons"; 
-import { getAllSaleDetails,deleteSaleDetails } from "../../actions/saleDetails";
-import { getAllSales } from "../../actions/sale"; 
-import { getAllProducts } from "../../actions/product";
-
+import { ExclamationCircleFilled, DeleteOutlined } from "@ant-design/icons";
 import moment from "moment";
+
+import {
+  getAllSaleDetails,
+  deleteSaleDetails,
+} from "../../actions/saleDetails";
+import { getAllSales } from "../../actions/sale";
+import { getAllProducts } from "../../actions/product";
 import SaleDetailsModal from "./SaleDetailsModal";
-const {confirm}=Modal;
+import FormattedCurrency from "../FormattedCurrency";
+
+const { confirm } = Modal;
+
 const columns = [
   {
-    title: "Sale ID",
+    title: "Mã khuyến mãi",
     dataIndex: "salesId",
     key: "salesID",
   },
- ];
+];
 
 const SaleDetails = () => {
   const { saleDetails } = useSelector((state) => state.saleDetails);
@@ -23,7 +38,6 @@ const SaleDetails = () => {
   const { products } = useSelector((state) => state.product);
   const [openModal, setOpenModal] = useState(false);
   const dispatch = useDispatch();
-  const [sales, setSales] = useState(null);
   const [action, setAction] = useState("");
   useEffect(() => {
     dispatch(getAllSales())
@@ -33,129 +47,139 @@ const SaleDetails = () => {
       .then(() => {})
       .catch(() => {});
   }, [dispatch]);
- const  handleDelete = (id)=>{
-  console.log('id: ',id);
-  confirm({
-    title: "Are you sure?",
-    icon: <ExclamationCircleFilled />,
-    content: `Do you want delete this product?`,
-    onOk() {
-      dispatch(deleteSaleDetails(id))
-      .then(() => {msg.success('Delete this product successful')})
-      .catch(() => {});
-    },
-    onCancel() {
-    },
-  });
-  
- }
-  console.log("saleDetails: ", saleDetails);
+  // const handleDelete = (id) => {
+  //   console.log("id: ", id);
+  //   confirm({
+  //     title: "Xác nhận?",
+  //     icon: <ExclamationCircleFilled />,
+  //     content: `Bạn muốn xóa sản phẩm này khỏi chương trình khuyến mãi?`,
+  //     onOk() {
+  //       dispatch(deleteSaleDetails(id))
+  //         .then(() => {
+  //           msg.success("Xóa sản phẩm khỏi chương trình khuyến mãi thành công");
+  //         })
+  //         .catch(() => {});
+  //     },
+  //     onCancel() {},
+  //   });
+  // };
+  //console.log("saleDetails: ", saleDetails);
   const columnss = [
     ...columns,
     {
-      title: "Product Name",
+      title: "Tên sản phẩm",
       dataIndex: "productId",
       key: "productId",
       render: (text, record) => {
-        const selectedProduct = products?.find(b => b.productId === text);
-        console.log('record: ',selectedProduct);
-        return selectedProduct ? selectedProduct.name: record.productId;
-      } 
+        const selectedProduct = products?.find((b) => b.productId === text);
+        console.log("record: ", selectedProduct);
+        return selectedProduct ? selectedProduct.name : record.productId;
+      },
     },
     {
-      title: "Image",
+      title: "Hình ảnh",
       dataIndex: "productId",
       key: "productId",
       render: (text, record) => {
-        const selectedProduct = products?.find(b => b.productId === text);
-        console.log('record: ',selectedProduct);
-        return selectedProduct ?<Image src={selectedProduct.image} width={60}/>: record.productId;
-      } 
+        const selectedProduct = products?.find((b) => b.productId === text);
+        console.log("record: ", selectedProduct);
+        return selectedProduct ? (
+          <Image src={selectedProduct.image} width={60} />
+        ) : (
+          record.productId
+        );
+      },
     },
     {
-      title: "Price",
+      title: "Giá gốc",
       dataIndex: "productId",
       key: "productId",
       render: (text, record) => {
-        const selectedProduct = products?.find(b => b.productId === text);
-        console.log('record: ',selectedProduct);
-        return selectedProduct ?<Typography.Text delete>${selectedProduct.price}</Typography.Text>: '';
-      } 
+        const selectedProduct = products?.find((b) => b.productId === text);
+        return selectedProduct ? (
+          <Typography.Text delete>
+            <FormattedCurrency amount={selectedProduct.price} />
+          </Typography.Text>
+        ) : (
+          ""
+        );
+      },
     },
     {
-      title: "Sale Price",
+      title: "Giá khuyến mãi",
       dataIndex: "salesPrice",
       key: "salesPrice",
       render: (text, record) => {
-      
-        return <Typography.Text type="danger">${text}</Typography.Text>;
-      } 
+        return (
+          <Typography.Text type="danger">
+            <FormattedCurrency amount={text} />
+          </Typography.Text>
+        );
+      },
     },
-    {
-      title: "Action",
-      key: "action",
-      render: (text, record) => (
-        <Space size="middle">
-        
-        
-          <Button
-            onClick={() => {
-             handleDelete(record.productId)
-            }}
-            icon={<DeleteOutlined/>}
-            style={{ background: "red" }}
-          />
-        </Space>
-      ),
-    },
+    // {
+    //   title: "",
+    //   key: "action",
+    //   render: (text, record) => (
+    //     <Space  size="middle">
+    //       <Button hidden={true}
+    //         onClick={() => {
+    //           handleDelete(record.productId);
+    //         }}
+    //         icon={<DeleteOutlined />}
+    //         style={{ background: "red" }}
+    //       />
+    //     </Space>
+    //   ),
+    // },
   ];
 
   const pagination = { pageSize: 5 };
-  const handleChange =(v)=>{
-    console.log('v: ',v);
-    //setSales(v); 
+  const handleChange = (v) => {
     dispatch(getAllSaleDetails(v))
       .then(() => {})
-      .catch(() => {
-      });
-  }
+      .catch(() => {});
+  };
   const options = [
     {
-      label: "Chua Sale",
+      label: "Sắp diễn ra",
       options: sale
-        ?  sale.filter((ss) => {
-            const date1 = moment(ss.startDay).format("YYYY-MM-DD")
-          const current = moment()
-         const h= current.diff(date1, "hours", true)
-         return h<0
-            
-          }).map((sale) => ({ label: sale.salesName, value: sale.salesId }))
+        ? sale
+            .filter((ss) => {
+              const date1 = moment(ss.startDay).format("YYYY-MM-DD");
+              const current = moment();
+              const h = current.diff(date1, "hours", true);
+              return h < 0;
+            })
+            .map((sale) => ({ label: sale.salesName, value: sale.salesId }))
         : [],
     },
     {
-      label: "Dang Sale",
+      label: "Đang diễn ra",
       options: sale
-        ? sale.filter((ss) => {
-            const date1 = moment(ss.endDay).format("YYYY-MM-DD")
-            const date2 = moment(ss.startDay).format("YYYY-MM-DD")
-          const current = moment()
-         const h= current.diff(date1, "hours", true)
-         const h2= current.diff(date2, "hours", true)
-         return h<=0 && h2>=0
-            
-          }).map((sale) => ({ label: sale.salesName, value: sale.salesId }))
+        ? sale
+            .filter((ss) => {
+              const date1 = moment(ss.endDay).format("YYYY-MM-DD");
+              const date2 = moment(ss.startDay).format("YYYY-MM-DD");
+              const current = moment();
+              const h = current.diff(date1, "hours", true);
+              const h2 = current.diff(date2, "hours", true);
+              return h <= 0 && h2 >= 0;
+            })
+            .map((sale) => ({ label: sale.salesName, value: sale.salesId }))
         : [],
     },
     {
-      label: "Dang Sale",
+      label: "Đã kết thúc",
       options: sale
-        ?sale.filter((ss) => {
-            const date1 = moment(ss.endDay).format("YYYY-MM-DD")
-          const current = moment()
-         const h= current.diff(date1, "hours", true)
-         return h>  0
-            
-          }).map((sale) => ({ label: sale.salesName, value: sale.salesId }))
+        ? sale
+            .filter((ss) => {
+              const date1 = moment(ss.endDay).format("YYYY-MM-DD");
+              const current = moment();
+              const h = current.diff(date1, "hours", true);
+              return h > 0;
+            })
+            .map((sale) => ({ label: sale.salesName, value: sale.salesId }))
         : [],
     },
   ];
@@ -166,21 +190,19 @@ const SaleDetails = () => {
           style={{ background: "var(--primary-color)", margin: 10 }}
           onClick={() => {
             setOpenModal(true);
-           // setCategory([]);
             setAction("add");
           }}
         >
-          Add
+          Thêm sản phẩm khuyến mãi
         </Button>
         <Select
-          placeholder="Choose sale"
+          placeholder="Chọn chương trình khuyến mãi"
           style={{
             width: 200,
           }}
-        onChange={handleChange}
+          onChange={handleChange}
           options={options}
         />
-        
       </Space>
       <div style={{ overflowX: "auto" }}>
         {" "}
@@ -192,7 +214,7 @@ const SaleDetails = () => {
             y: "60vh",
           }}
           locale={{
-            emptyText: "Your categories is empty",
+            emptyText: "Danh sách sản phẩm khuyến mãi trống",
           }}
           rowKey="id"
         />
@@ -200,9 +222,7 @@ const SaleDetails = () => {
       <SaleDetailsModal
         openModal={openModal}
         setOpenModal={setOpenModal}
-        //sd={category}
-        //setCategory={setCategory}
-       sd= {saleDetails}
+        sd={saleDetails}
         action={action}
       />
     </>

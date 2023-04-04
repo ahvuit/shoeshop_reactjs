@@ -13,41 +13,69 @@ const getSaleDetailsBySalesId = (id) => {
     });
 };
 
-// const insertSale = (sale) => {
-//   //console.log('bodyI: ',{...category});
-//   return fetch(API_URL + "insertSales", {
-//     method: "POST",
+const getSaleDetailsIsComing = () => {
+  return fetch(API_URL + `getAllSaleDetailsComingSoon`, {
+    method: "GET",
+    mode: "cors",
+    headers: authHeader(),
+  })
+    .then((res) => res.json())
+    .then((json) => {
+      return json;
+    });
+};
+
+const getSaleDetailsIsActive = () => {
+  return fetch(API_URL + `getAllSaleDetailsActive`, {
+    method: "GET",
+    mode: "cors",
+    headers: authHeader(),
+  })
+    .then((res) => res.json())
+    .then((json) => {
+      return json;
+    });
+};
+
+const insertSaleDetails = (sale) => {
+
+  return fetch(API_URL + "insertSalesDetails", {
+    method: "POST",
+    mode: "cors",
+    headers: authHeader(),
+    body: JSON.stringify(sale),
+  })
+    .then((res) => res.json())
+    .then((json) => {
+      
+      // localStorage.setItem("orderResult", JSON.stringify(json.data));
+      return json;
+    }).catch((e)=>{});
+};
+// const deleteSaleDetails = (sale ) => {
+ 
+  
+//   return fetch(API_URL + `deleteSaleDetailsByList`, {
+//     method: "DELETE",
 //     mode: "cors",
 //     headers: authHeader(),
 //     body: JSON.stringify(sale),
-//   })
-//     .then((res) => res.json())
+//   }) 
+  
+//     .then((res) =>  res.json())
 //     .then((json) => {
 //       // localStorage.setItem("orderResult", JSON.stringify(json.data));
 //       return json;
-//     });
-// };
-const deleteSaleDetails = (id ) => {
- 
-  // console.log('body: ',JSON.stringify(body));
-  return fetch(API_URL + `deleteSaleDetails/${id}`, {
-    method: "DELETE",
-    mode: "cors",
-    headers: authHeader(),
-   // body: JSON.stringify(sale),
-  })
-  
-    .then((res) =>  res.json())
-    .then((json) => {
-      // localStorage.setItem("orderResult", JSON.stringify(json.data));
-      return json;
       
-    }).catch((e)=>{console.log('error: ',e)});
-};
+//     }).catch((e)=>{});
+// };
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getSaleDetailsBySalesId,
-  deleteSaleDetails
+  //deleteSaleDetails,
+  getSaleDetailsIsComing,
+  getSaleDetailsIsActive,
+  insertSaleDetails
 //   updateSale,
 //   insertSale 
 };

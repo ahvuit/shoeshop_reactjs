@@ -35,7 +35,6 @@ const cancelOrder = (orderId) => {
   })
     .then((res) => res.json())
     .then((json) => {
-      console.log(json);
       return json;
     });
 };
@@ -52,7 +51,6 @@ const getAllOrders = () => {
 };
 const updateOrder = (orderId, order) => {
  
-  // console.log('body: ',JSON.stringify(body));
   return fetch(API_URL + `updateOrder/${orderId}`, {
     method: "PUT",
     mode: "cors",
@@ -65,7 +63,7 @@ const updateOrder = (orderId, order) => {
       // localStorage.setItem("orderResult", JSON.stringify(json.data));
       return json;
       
-    }).catch((e)=>{console.log('error: ',e)});
+    }).catch((e)=>{});
 };
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {

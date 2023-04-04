@@ -52,6 +52,7 @@ export const register = (email, password) => (dispatch) => {
     }
   );
 };
+
 export const login = (email, password) => {
   return (dispatch, getState) => {
     return AuthService.login(email, password).then((data) => {

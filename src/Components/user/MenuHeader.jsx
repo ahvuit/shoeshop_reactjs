@@ -7,11 +7,14 @@ import { useNavigate } from "react-router-dom";
 
 import { clearMessage } from "../../actions/message";
 import { getAllBrands } from "../../actions/brand";
+import { getAllCategories } from "../../actions/category";
 import { getAllSales } from "../../actions/sale";
 import { logout } from "../../actions/auth";
 
 const MenuHeader = () => {
   const { brand } = useSelector((state) => state.brand);
+  const { categories } = useSelector((state) => state.category);
+
   const { sale } = useSelector((state) => state.sale);
   const { message } = useSelector((state) => state.message);
   const dispatch = useDispatch();
@@ -29,6 +32,9 @@ const MenuHeader = () => {
       .catch(() => {
         msg.error(message);
       });
+    dispatch(getAllCategories())
+      .then(() => {})
+      .catch(() => {});
     dispatch(getAllSales())
       .then(() => {})
       .catch(() => {
@@ -64,7 +70,7 @@ const MenuHeader = () => {
         <Menu.Item key="">
           <HomeFilled />
         </Menu.Item>
-        <Menu.SubMenu key="brand" title="Brand">
+        <Menu.SubMenu key="brand" title="Hãng">
           {brand !== null
             ? brand.map((_b, index) => (
                 // eslint-disable-next-line jsx-a11y/alt-text
@@ -76,7 +82,19 @@ const MenuHeader = () => {
               ))
             : ""}
         </Menu.SubMenu>
-        <Menu.SubMenu key="sale" title="Sale">
+        <Menu.SubMenu key="cate" title="Danh mục">
+          {categories !== null
+            ? categories.map((_c, index) => (
+                // eslint-disable-next-line jsx-a11y/alt-text
+                <Menu.Item key={`cate/cate-${_c.categoryId}`}>
+                  {/* <img src={_b.logo} width="40" height="25" /> */}
+                  {"  "}
+                  {_c.categoryName}
+                </Menu.Item>
+              ))
+            : ""}
+        </Menu.SubMenu>
+        <Menu.SubMenu key="sale" title="Khuyến mãi">
           {sale !== null
             ? sale.map((_s, index) => (
                 <Menu.Item key={`sale/sale-${_s.salesId}`}>
@@ -84,10 +102,9 @@ const MenuHeader = () => {
                 </Menu.Item>
               ))
             : ""}
-          <Menu.Item key="sale/sale-thich">Thích thì sale </Menu.Item>
         </Menu.SubMenu>
-        <Menu.Item key="new/new">New Product</Menu.Item>
-        <Menu.Item key="contact">Contact</Menu.Item>
+        <Menu.Item key="new/new">Sản phẩm mới</Menu.Item>
+        <Menu.Item key="contact">Liên hệ</Menu.Item>
         {currentUser ? (
           <Menu.SubMenu
             key="u"
@@ -95,13 +112,18 @@ const MenuHeader = () => {
             title={<MenuOutlined style={{ color: "var(--primary-color)" }} />}
           >
             <Menu.Item key="logout">
-              <LogoutOutlined /> Logout
+              <LogoutOutlined /> Đăng xuất
             </Menu.Item>
-            <Menu.Item key="profile">Profile</Menu.Item>
-            {(currentUser.utype==='USR')? <Menu.Item key={`order/${currentUser.userId}`}>My Order</Menu.Item>:
-               <Menu.Item key={`admin`}>Admin</Menu.Item>
-            }
-           
+            <Menu.Item key="profile">
+              Thông tin tài khoản<nav></nav>
+            </Menu.Item>
+            {currentUser.utype === "USR" ? (
+              <Menu.Item key={`order/${currentUser.userId}`}>
+                Đơn hàng của tôi
+              </Menu.Item>
+            ) : (
+              <Menu.Item key={`admin`}>Trang quản trị</Menu.Item>
+            )}
           </Menu.SubMenu>
         ) : (
           <Menu.SubMenu
@@ -109,9 +131,9 @@ const MenuHeader = () => {
             style={{ marginLeft: "auto" }}
             title={<MenuOutlined style={{ color: "var(--primary-color)" }} />}
           >
-            <Menu.Item key="login">Login</Menu.Item>
+            <Menu.Item key="login">Đăng nhập</Menu.Item>
 
-            <Menu.Item key="register">Register</Menu.Item>
+            <Menu.Item key="register">Đăng ký</Menu.Item>
           </Menu.SubMenu>
         )}
       </Menu>

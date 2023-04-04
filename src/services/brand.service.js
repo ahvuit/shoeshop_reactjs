@@ -13,7 +13,6 @@ const getAllBrand = () => {
     });
 };
 const insertBrand = (brand) => {
-  console.log("bodyI: ", { ...brand });
   return fetch(API_URL + "insertBrand", {
     method: "POST",
     mode: "cors",
@@ -27,7 +26,6 @@ const insertBrand = (brand) => {
     });
 };
 const updateBrand = (brandId, brand) => {
-  // console.log('body: ',JSON.stringify(body));
   return fetch(API_URL + `updateBrand/${brandId}`, {
     method: "PUT",
     mode: "cors",
@@ -40,7 +38,6 @@ const updateBrand = (brandId, brand) => {
       return json;
     })
     .catch((e) => {
-      console.log("error: ", e);
     });
 };
 // eslint-disable-next-line import/no-anonymous-default-export

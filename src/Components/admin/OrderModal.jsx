@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Space,
   Button,
   Modal,
   Form,
   Input,
-  InputNumber,
   Select,
-  Rate,
-  message as msg
+  message as msg,
 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getAllStatus } from "../../actions/status";
-import {  updateOrder } from "../../actions/order";
+import { updateOrder } from "../../actions/order";
 
 const validateMessages = {
   // eslint-disable-next-line no-template-curly-in-string
@@ -22,8 +20,6 @@ const validateMessages = {
 const OrderModal = (props) => {
   const { openModal, setOpenModal, order, action } = props;
   const { status } = useSelector((state) => state.status);
-  console.log('status: ',status);
-  console.log('order: ',order);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -33,30 +29,29 @@ const OrderModal = (props) => {
   }, [dispatch]);
   const [form] = Form.useForm();
 
- 
   useEffect(() => {
     if (Object.keys(order).length !== 0) {
-      form.setFieldsValue(order);      
+      form.setFieldsValue(order);
     }
   }, [form, order]);
-  const handleSubmit = (values) => {
-    const {bookingDate,key,statusId,statusName,  ...rest}= order
-    const eOrder= {...rest,statusId:values.statusId}
-    console.log("value: ", JSON.stringify(eOrder));
-    // const { categoryId, ...rest } = values;
-      dispatch(updateOrder(eOrder.orderId, eOrder))
-        .then(() => {
-          setOpenModal(false);
-          msg.success("Update order successful");
-        })
-        .catch(() => {msg.error('loi')});
-  };
 
+  const handleSubmit = (values) => {
+    const { bookingDate, key, statusId, statusName, ...rest } = order;
+    const eOrder = { ...rest, statusId: values.statusId };
+    dispatch(updateOrder(eOrder.orderId, eOrder))
+      .then(() => {
+        setOpenModal(false);
+        msg.success("Cập nhật đơn hàng thành công");
+      })
+      .catch(() => {
+        msg.error("Đã xảy ra lỗi, vui lòng thử lại");
+      });
+  };
 
   return (
     <>
       <Modal
-        title="Modal 1000px width"
+        title="Cập nhật đơn hàng"
         centered
         open={openModal}
         onOk={() => setOpenModal(false)}
@@ -72,18 +67,17 @@ const OrderModal = (props) => {
           onFinish={handleSubmit}
           validateMessages={validateMessages}
         >
-          <Form.Item name="orderId" label="Order Id">
+          <Form.Item name="orderId" label="Mã đơn hàng">
             <Input disabled />
           </Form.Item>
-          
           <Space>
             <Form.Item
               style={{ width: "30vw" }}
               name="statusId"
-              label="Status"
+              label="Trạng thái"
               rules={[{ required: true }]}
             >
-              <Select placeholder="Select brand">
+              <Select placeholder="Chọn trạng thái đơn hàng">
                 {status?.map((s) => (
                   <Select.Option key={s.statusId} value={s.statusId}>
                     {s.statusName}
@@ -91,17 +85,14 @@ const OrderModal = (props) => {
                 ))}
               </Select>
             </Form.Item>
-
-            
           </Space>
-
           <Form.Item>
             <Button
               style={{ background: "var(--primary-color)" }}
               type="primary"
               htmlType="submit"
             >
-              Submit
+              Cập nhật
             </Button>
           </Form.Item>
         </Form>
