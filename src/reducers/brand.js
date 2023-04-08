@@ -4,7 +4,7 @@ import {
   INSERT_BRAND_SUCCESS,
   INSERT_BRAND_FAIL,
   UPDATE_BRAND_SUCCESS,
-  UPDATE_BRAND_FAIL
+  UPDATE_BRAND_FAIL,
 } from "../actions/types";
 const initialState = { brand: null, error: null };
 // eslint-disable-next-line import/no-anonymous-default-export

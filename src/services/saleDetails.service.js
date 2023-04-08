@@ -38,7 +38,6 @@ const getSaleDetailsIsActive = () => {
 };
 
 const insertSaleDetails = (sale) => {
-
   return fetch(API_URL + "insertSalesDetails", {
     method: "POST",
     mode: "cors",
@@ -47,26 +46,25 @@ const insertSaleDetails = (sale) => {
   })
     .then((res) => res.json())
     .then((json) => {
-      
       // localStorage.setItem("orderResult", JSON.stringify(json.data));
       return json;
-    }).catch((e)=>{});
+    })
+    .catch((e) => {});
 };
 // const deleteSaleDetails = (sale ) => {
- 
-  
+
 //   return fetch(API_URL + `deleteSaleDetailsByList`, {
 //     method: "DELETE",
 //     mode: "cors",
 //     headers: authHeader(),
 //     body: JSON.stringify(sale),
-//   }) 
-  
+//   })
+
 //     .then((res) =>  res.json())
 //     .then((json) => {
 //       // localStorage.setItem("orderResult", JSON.stringify(json.data));
 //       return json;
-      
+
 //     }).catch((e)=>{});
 // };
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -75,7 +73,7 @@ export default {
   //deleteSaleDetails,
   getSaleDetailsIsComing,
   getSaleDetailsIsActive,
-  insertSaleDetails
-//   updateSale,
-//   insertSale 
+  insertSaleDetails,
+  //   updateSale,
+  //   insertSale
 };

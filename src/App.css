@@ -126,3 +126,8 @@
     transform: translateY(0px);
   }
 }
+/* 
+.cardInactive {
+  background-color: #ccc;
+  opacity: 0.5;
+} */

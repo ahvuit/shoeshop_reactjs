@@ -5,6 +5,8 @@ import {
   UPDATE_USER_FAIL,
   INSERT_USER_SUCCESS,
   INSERT_USER_FAIL,
+  CHANGE_PASS_SUCCESS,
+  CHANGE_PASS_FAIL
 } from "./types";
 import UserService from "../services/user.service";
 
@@ -36,6 +38,24 @@ export const insertUser = (user) => (dispatch) => {
     } else {
       dispatch({
         type: INSERT_USER_FAIL,
+        payload: { error: response.message },
+      });
+      return Promise.reject();
+    }
+  });
+};
+
+export const changePass = (userId, body) => (dispatch) => {
+  return UserService.changePass(userId, body).then((response) => {
+    if (response.data != null && Object.keys(response.data).length !== 0) {
+      dispatch({
+        type: CHANGE_PASS_SUCCESS,
+        payload: { user: response.data },
+      });
+      return Promise.resolve();
+    } else {
+      dispatch({
+        type: CHANGE_PASS_FAIL,
         payload: { error: response.message },
       });
       return Promise.reject();

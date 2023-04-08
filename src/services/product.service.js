@@ -36,25 +36,26 @@ const insertProduct = (product) => {
       return json;
     });
 };
-const updateProduct= (productId, product) => {
+const updateProduct = (productId, product) => {
+  console.log("pro: ", product);
   return fetch(API_URL + `updateProduct/${productId}`, {
     method: "PUT",
     mode: "cors",
     headers: authHeader(),
     body: JSON.stringify(product),
   })
-  
-    .then((res) =>  res.json())
+    .then((res) => res.json())
     .then((json) => {
+      console.log("res product: ", json);
       // localStorage.setItem("orderResult", JSON.stringify(json.data));
       return json;
-      
-    }).catch((e)=>{});
+    })
+    .catch((e) => {});
 };
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getAllProducts,
   getProductDetails,
   updateProduct,
-  insertProduct
+  insertProduct,
 };

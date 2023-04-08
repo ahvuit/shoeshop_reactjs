@@ -54,9 +54,6 @@ const Map = () => {
 
 export default Map;
 
-
-
-
 // import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 // import React, { useState, useCallback } from "react";
 // const containerStyle = {

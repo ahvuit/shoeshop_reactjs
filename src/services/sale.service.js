@@ -27,24 +27,22 @@ const insertSale = (sale) => {
     });
 };
 const updateSale = (salesId, sale) => {
- 
   return fetch(API_URL + `updateSales/${salesId}`, {
     method: "PUT",
     mode: "cors",
     headers: authHeader(),
     body: JSON.stringify(sale),
   })
-  
-    .then((res) =>  res.json())
+    .then((res) => res.json())
     .then((json) => {
       // localStorage.setItem("orderResult", JSON.stringify(json.data));
       return json;
-      
-    }).catch((e)=>{});
+    })
+    .catch((e) => {});
 };
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getAllSales,
   updateSale,
-  insertSale 
+  insertSale,
 };

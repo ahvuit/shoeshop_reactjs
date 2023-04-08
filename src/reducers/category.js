@@ -38,7 +38,7 @@ export default function (state = initialState, action) {
       const { categoryId, ...rest } = payload.category;
       const newCategory = state.categories.map((cate, index) => {
         if (cate.categoryId === categoryId) {
-          return { 
+          return {
             ...cate,
             ...rest,
           };

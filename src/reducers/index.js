@@ -13,7 +13,6 @@ import sizeTable from "./sizeTable";
 import status from "./status";
 import saleDetails from "./saleDetails";
 
- 
 export default combineReducers({
   auth,
   message,
@@ -23,7 +22,7 @@ export default combineReducers({
   cart,
   order,
   category,
-  user, 
+  user,
   profile,
   sizeTable,
   status,

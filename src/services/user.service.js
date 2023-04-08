@@ -39,12 +39,26 @@ const updateUser = (userId, user) => {
       // localStorage.setItem("orderResult", JSON.stringify(json.data));
       return json;
     })
-    .catch((e) => {
-    });
+    .catch((e) => {});
+};
+const changePass = (userId, body) => {
+  return fetch(API_URL + `changePassword/${userId}`, {
+    method: "PUT",
+    mode: "cors",
+    headers: authHeader(),
+    body: JSON.stringify(body),
+  })
+    .then((res) => res.json())
+    .then((json) => {
+      // localStorage.setItem("orderResult", JSON.stringify(json.data));
+      return json;
+    })
+    .catch((e) => {});
 };
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getAllUser,
   updateUser,
   insertUser,
+  changePass,
 };

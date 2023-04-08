@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Drawer, Table, Badge, Button, Form, message as msg } from "antd";
+import { Drawer, Badge, Button, Form, message as msg } from "antd";
 import { useNavigate } from "react-router-dom";
 import { ShoppingCartOutlined } from "@ant-design/icons";
-
+import Table from "../Common/Table";
 import {
   removeFromCart,
   increaseQuantity,
   decreaseQuantity,
 } from "../../actions/cart";
 import AppCheckout from "./AppCheckout";
-import FormattedCurrency from "../FormattedCurrency";
+import FormattedCurrency from "../Common/FormattedCurrency";
+import MyButton from "../Common/MyButton";
 
 const AppCart = () => {
   const { Carts } = useSelector((state) => state.cart);
@@ -143,9 +144,16 @@ const AppCart = () => {
         onClose={() => {
           setCartDrawerOpen(false);
         }}
-        contentWrapperStyle={{ width: "100%", maxWidth: "850px" }}
+        contentWrapperStyle={{ width: "100%", maxWidth: "900px" }}
       >
         <Table
+          data={data}
+          columns={columns}
+          pagination={false}
+          emptyText="Your cart is empty"
+          rowKey={(record) => record.productId}
+        />
+        {/* < T
           dataSource={data}
           columns={columns}
           pagination={false}
@@ -153,7 +161,7 @@ const AppCart = () => {
             emptyText: "Your cart is empty",
           }}
           rowKey={(record) => record.productId + record.size}
-        />
+        /> */}
         <div style={{ marginTop: 20, marginBottom: 20 }}>
           <h3>
             Tổng tiền:{" "}
@@ -163,14 +171,14 @@ const AppCart = () => {
             </span>
           </h3>
         </div>
-        <Button
-          style={{ background: "var(--primary-color)", color: "#fff" }}
+        <MyButton
+          bgColor="var(--primary-color)"
+          type="primary"
           disabled={Object.keys(Carts).length === 0}
           onClick={handleCheckout}
-          type="primary"
         >
           Thanh toán giỏ hàng
-        </Button>
+        </MyButton>
       </Drawer>
       <AppCheckout
         checkoutDrawerOpen={checkoutDrawerOpen}

@@ -1,16 +1,19 @@
 import {
   GET_SALE_DETAILS_SUCCESS,
   GET_SALE_DETAILS_FAIL,
-  DELETE_SALE_DETAILS_SUCCESS,
-  DELETE_SALE_DETAILS_FAIL,
   GET_SALE_DETAILS_IS_COMING_SUCCESS,
   GET_SALE_DETAILS_IS_COMING_FAIL,
   GET_SALE_DETAILS_IS_ACTIVE_SUCCESS,
   GET_SALE_DETAILS_IS_ACTIVE_FAIL,
   INSERT_SALE_DETAILS_SUCCESS,
-  INSERT_SALE_DETAILS_FAIL
+  INSERT_SALE_DETAILS_FAIL,
 } from "../actions/types";
-const initialState = { saleDetails: [],saleDetailsIsComing:null,saleDetailsIsActive:null, error: null };
+const initialState = {
+  saleDetails: [],
+  saleDetailsIsComing: null,
+  saleDetailsIsActive: null,
+  error: null,
+};
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function (state = initialState, action) {
   const { type, payload } = action;
@@ -50,21 +53,18 @@ export default function (state = initialState, action) {
         ...state,
         saleDetailsIsActive: null,
       };
-      case INSERT_SALE_DETAILS_SUCCESS:
-        console.log('data reduces: ',...payload.saleDetails);
-        //console.log('data reduces: ',{saleDetails:[...state.saleDetails, payload.saledetails]});
-        return {
-          ...state,
-          saleDetails: [...state.saleDetails, ...payload.saleDetails],
-          error: null,
-          // categories: payload.categories,
-        };
-      case INSERT_SALE_DETAILS_FAIL:
-        console.log('e');
-        return {
-          ...state,
-          error: payload.error,
-        };
+    case INSERT_SALE_DETAILS_SUCCESS:
+      return {
+        ...state,
+        saleDetails: [...state.saleDetails, ...payload.saleDetails],
+        error: null,
+        // categories: payload.categories,
+      };
+    case INSERT_SALE_DETAILS_FAIL:
+      return {
+        ...state,
+        error: payload.error,
+      };
     // case DELETE_SALE_DETAILS_SUCCESS:
     //   const productId = payload.productId;
     //   const newSD = state.saleDetails.filter(

@@ -13,7 +13,6 @@ const getAllCategories = () => {
     });
 };
 const insertCategory = (category) => {
-  
   return fetch(API_URL + "insertCategory", {
     method: "POST",
     mode: "cors",
@@ -24,24 +23,22 @@ const insertCategory = (category) => {
     .then((json) => {
       // localStorage.setItem("orderResult", JSON.stringify(json.data));
       return json;
-    }).catch((e)=>{
-    });
+    })
+    .catch((e) => {});
 };
 const updateCategory = (categoryId, category) => {
- 
   return fetch(API_URL + `updateCategory/${categoryId}`, {
     method: "PUT",
     mode: "cors",
     headers: authHeader(),
     body: JSON.stringify(category),
   })
-  
-    .then((res) =>  res.json())
+    .then((res) => res.json())
     .then((json) => {
       // localStorage.setItem("orderResult", JSON.stringify(json.data));
       return json;
-      
-    }).catch((e)=>{});
+    })
+    .catch((e) => {});
 };
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {

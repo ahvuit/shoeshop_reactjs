@@ -27,10 +27,10 @@ export const register = (email, password) => (dispatch) => {
         dispatch({
           type: REGISTER_FAIL,
         });
-        dispatch({
-          type: SET_MESSAGE,
-          payload: message,
-        });
+        // dispatch({
+        //   type: SET_MESSAGE,
+        //   payload: message,
+        // });
         return Promise.reject();
       }
     },

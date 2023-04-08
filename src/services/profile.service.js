@@ -20,15 +20,17 @@ const updateProfile = (id, profile) => {
   })
     .then((res) => res.json())
     .then((json) => {
+      console.log("json: ", json);
       // localStorage.setItem("orderResult", JSON.stringify(json.data));
       return json;
     })
     .catch((e) => {
+      console.log("e: ", e);
     });
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getProfile,
-  updateProfile
+  updateProfile,
 };

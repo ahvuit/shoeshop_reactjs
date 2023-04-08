@@ -37,8 +37,7 @@ const updateBrand = (brandId, brand) => {
       // localStorage.setItem("orderResult", JSON.stringify(json.data));
       return json;
     })
-    .catch((e) => {
-    });
+    .catch((e) => {});
 };
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {

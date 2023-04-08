@@ -4,9 +4,11 @@ import {
   SELECTED_PRODUCT,
   REMOVE_SELECTED_PRODUCT,
   UPDATE_PRODUCT_SUCCESS,
-  UPDATE_PRODUCT_FAIL,INSERT_PRODUCT_SUCCESS,INSERT_PRODUCT_FAIL
+  UPDATE_PRODUCT_FAIL,
+  INSERT_PRODUCT_SUCCESS,
+  INSERT_PRODUCT_FAIL,
 } from "../actions/types";
-const initialState = { products: null, product: null,error:null  };
+const initialState = { products: null, product: null, error: null };
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function (state = initialState, action) {
   const { type, payload } = action;
@@ -33,28 +35,28 @@ export default function (state = initialState, action) {
         ...state,
         product: null,
       };
-      case UPDATE_PRODUCT_SUCCESS:
-        const { productId, ...rest } = payload.product;
-        const newProduct = state.products.map((pr, index) => {
-          if (pr.productId === productId) {
-            return { 
-              ...pr,
-              ...rest,
-            };
-          }
-          return pr;
-        });
-        return {
-          ...state,
-          products: newProduct, 
-          error: null, 
-        };
-      case UPDATE_PRODUCT_FAIL:
-        return {
-          ...state,
-          error: payload.error,
-        };
-        case INSERT_PRODUCT_SUCCESS:
+    case UPDATE_PRODUCT_SUCCESS:
+      const { productId, ...rest } = payload.product;
+      const newProduct = state.products.map((pr, index) => {
+        if (pr.productId === productId) {
+          return {
+            ...pr,
+            ...rest,
+          };
+        }
+        return pr;
+      });
+      return {
+        ...state,
+        products: newProduct,
+        error: null,
+      };
+    case UPDATE_PRODUCT_FAIL:
+      return {
+        ...state,
+        error: payload.error,
+      };
+    case INSERT_PRODUCT_SUCCESS:
       return {
         ...state,
         products: [...state.products, payload.product],

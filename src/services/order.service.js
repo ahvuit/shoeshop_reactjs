@@ -50,20 +50,18 @@ const getAllOrders = () => {
     });
 };
 const updateOrder = (orderId, order) => {
- 
   return fetch(API_URL + `updateOrder/${orderId}`, {
     method: "PUT",
     mode: "cors",
     headers: authHeader(),
     body: JSON.stringify(order),
   })
-  
-    .then((res) =>  res.json())
+    .then((res) => res.json())
     .then((json) => {
       // localStorage.setItem("orderResult", JSON.stringify(json.data));
       return json;
-      
-    }).catch((e)=>{});
+    })
+    .catch((e) => {});
 };
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
@@ -71,5 +69,5 @@ export default {
   getAllOrderByUserId,
   cancelOrder,
   getAllOrders,
-  updateOrder, 
+  updateOrder,
 };

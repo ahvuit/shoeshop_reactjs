@@ -80,7 +80,7 @@ export default function (state = initialState, action) {
         error: payload.error,
       };
     case UPDATE_ORDER_SUCCESS:
-      const { orderId: a, statusId: b} = payload.order;
+      const { orderId: a, statusId: b } = payload.order;
       const newOrders1 = state.orders1.map((o, index) => {
         if (o.orderModel.orderId === a) {
           const c =
