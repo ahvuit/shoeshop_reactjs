@@ -1,5 +1,5 @@
 import { Button, Modal, Space, Tag, message as msg } from "antd";
-import React, { useState } from "react";
+import React from "react";
 // import { Table } from "antd";
 import moment from "moment";
 import { useDispatch } from "react-redux";
@@ -8,7 +8,6 @@ import { InfoOutlined, CloseOutlined } from "@ant-design/icons";
 import { cancelOrder } from "../../../actions/order";
 import FormattedCurrency from "../../Common/FormattedCurrency";
 import Table from "../../Common/Table";
-import OrderDetailsModal from "./OrderModal";
 
 function OrderList({ data ,setOpenModal,setOrderId,setStatusId}) {
   
