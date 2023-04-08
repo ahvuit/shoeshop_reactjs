@@ -7,6 +7,7 @@ import { getAllProducts } from "../../../actions/product";
 
 const OrderModal = (props) => {
   const { openModal, setOpenModal, orderId } = props;
+  console.log('id: ',orderId);
   const { orders1 } = useSelector((state) => state.order);
   const { products } = useSelector((state) => state.product);
   const dispatch = useDispatch();

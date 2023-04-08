@@ -25,6 +25,7 @@ const ProductModal = (props) => {
   const { open, setOpen, product, action } = props;
   const { categories } = useSelector((state) => state.category);
   const { brand } = useSelector((state) => state.brand);
+  const { user } = useSelector((state) => state.auth);
   const [image, setImage] = useState("");
   const dispatch = useDispatch();
 
@@ -71,14 +72,14 @@ const ProductModal = (props) => {
         image: image,
         createdDate: null,
         dateUpdated: null,
-        updateBy: null,
+        updateBy: user.userId,
       };
       dispatch(insertProduct(b))
         .then(() => {
           setOpen(false);
           msg.success("Insert product successful");
         })
-        .catch(() => {});
+        .catch((e) => {});
     } else if (action === "edit") {
       const b = {
         ...values,
@@ -178,14 +179,14 @@ const ProductModal = (props) => {
               label="Đã bán"
               rules={[{ required: true }]}
             >
-              <InputNumber disabled min={0} />
+              <InputNumber  min={0} />
             </Form.Item>
             <Form.Item
               name="stock"
               label="Tồn kho"
               rules={[{ required: true }]}
             >
-              <InputNumber disabled min={0} />
+              <InputNumber  min={0} />
             </Form.Item>
             <Form.Item name="price" label="Giá" rules={[{ required: true }]}>
               <InputNumber min={0} />

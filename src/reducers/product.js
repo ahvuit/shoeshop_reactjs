@@ -8,7 +8,7 @@ import {
   INSERT_PRODUCT_SUCCESS,
   INSERT_PRODUCT_FAIL,
 } from "../actions/types";
-const initialState = { products: null, product: null, error: null };
+const initialState = { products: [], product: null, error: null };
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function (state = initialState, action) {
   const { type, payload } = action;

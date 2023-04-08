@@ -8,6 +8,7 @@ const OrderDetailsModal = (props) => {
   const { openModal, setOpenModal, orderId, statusId } = props;
   const { orders } = useSelector((state) => state.order);
   const { products } = useSelector((state) => state.product);
+  //console.log('order: ',orders);
   let data = orders.filter((order) => order?.orderModel.orderId === orderId);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -24,6 +25,8 @@ const OrderDetailsModal = (props) => {
       key: `orderDetail-${index}`,
     };
   });
+  console.log('data: ',orderDetailsWithKeys);
+
   const columns = [
     {
       title: "Tên Sản phẩm",
@@ -94,9 +97,14 @@ const OrderDetailsModal = (props) => {
       width={1000}
       footer={null}
     >
+        {console.log('ddd: ',orderDetailsWithKeys)}
+
       <Table
         style={{ marginTop: 20 }}
-        data={orderDetailsWithKeys}
+        dataSource={orderDetailsWithKeys}
+        locale={{
+          emptyText: "Your cart is empty",
+        }}
         columns={columns}
         rowKey="key"
       />

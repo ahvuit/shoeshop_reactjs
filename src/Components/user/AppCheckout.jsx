@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 
 import { addOrder } from "../../actions/order";
 import { clearCart } from "../../actions/cart";
+import FormattedCurrency from "../Common/FormattedCurrency";
 
 const AppCheckout = (props) => {
   const {
@@ -92,7 +93,7 @@ const AppCheckout = (props) => {
         onClose={() => {
           setCheckoutCartDrawerOpen(false);
         }}
-        title={totalCartPrice}
+        title={<FormattedCurrency amount={ totalCartPrice}/>}
       >
         <Form form={form} onFinish={handleFinish}>
           <Form.Item

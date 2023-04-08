@@ -34,10 +34,10 @@ const insertProduct = (product) => {
     .then((json) => {
       // localStorage.setItem("orderResult", JSON.stringify(json.data));
       return json;
-    });
+    }).catch((e)=>{});
 };
 const updateProduct = (productId, product) => {
-  console.log("pro: ", product);
+  
   return fetch(API_URL + `updateProduct/${productId}`, {
     method: "PUT",
     mode: "cors",
@@ -46,7 +46,6 @@ const updateProduct = (productId, product) => {
   })
     .then((res) => res.json())
     .then((json) => {
-      console.log("res product: ", json);
       // localStorage.setItem("orderResult", JSON.stringify(json.data));
       return json;
     })

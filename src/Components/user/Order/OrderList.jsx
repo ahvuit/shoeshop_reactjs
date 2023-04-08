@@ -10,10 +10,8 @@ import FormattedCurrency from "../../Common/FormattedCurrency";
 import Table from "../../Common/Table";
 import OrderDetailsModal from "./OrderModal";
 
-function OrderList({ data }) {
-  const [openModal, setOpenModal] = useState(false);
-  const [orderId, setOrderId] = useState("");
-  const [statusId, setStatusId] = useState("");
+function OrderList({ data ,setOpenModal,setOrderId,setStatusId}) {
+  
   const data1 = data.map((item, index) => {
     return { ...item.orderModel, key: index };
   });
@@ -132,12 +130,7 @@ function OrderList({ data }) {
         emptyText="Danh sách đơn hàng của bạn hiện đang trống"
         rowKey="key"
       />
-      <OrderDetailsModal
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-        orderId={orderId}
-        statusId={statusId}
-      />
+     
     </div>
   );
 }

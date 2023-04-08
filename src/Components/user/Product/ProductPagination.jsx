@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 const ProductPagination=(props)=>{
     const {categoryId,data1,setData}=props;
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize] = useState(1);
+  const [pageSize] = useState(10);
   const indexOfLastItem = currentPage * pageSize;
   const indexOfFirstItem = indexOfLastItem - pageSize;
   const currentItems = data1

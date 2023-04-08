@@ -130,7 +130,7 @@ const Customers = () => {
           ) : (
             ""
           )}
-          <Button
+          {/* <Button
             onClick={() => {
               const action = "reset";
               handleActive(record, action);
@@ -139,7 +139,7 @@ const Customers = () => {
             style={{ background: "#ffc107" }}
           >
             Đặt lại mật khẩu
-          </Button>
+          </Button> */}
           {record.email !== userCurrent.email ? (
             <Button
               onClick={() => {
